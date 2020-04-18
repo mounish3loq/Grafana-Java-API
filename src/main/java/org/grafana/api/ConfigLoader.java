@@ -10,15 +10,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
-import org.grafana.api.config.AdminAPI;
-import org.grafana.api.config.AdminAuthAPI;
-import org.grafana.api.config.AdminOrganisationAPI;
-import org.grafana.api.config.AdminUserAPI;
-import org.grafana.api.config.CurrOrganisationAPI;
-import org.grafana.api.config.DashboardAPI;
-import org.grafana.api.config.Experimental;
-import org.grafana.api.config.FolderAPI;
-import org.grafana.api.config.FolderDashboardSearchAPI;
+import org.grafana.api.config.*;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -35,6 +28,7 @@ public class ConfigLoader {
     private static final String pathAdminOrganisationAPI = "/config/AdminOrganisationAPI.json";
     private static final String pathAdminUserAPI = "/config/AdminUserAPI.json";
     private static final String pathCurrOrganisationAPI = "/config/CurrOrganisationAPI.json";
+    private static final String pathDataSourceAPI = "/config/DataSourceAPI.json";
     private static final String pathDashboardAPI = "/config/DashboardAPI.json";
     private static final String pathFolderAPI = "/config/FolderAPI.json";
     private static final String pathFolderDashboardSearchAPI = "/config/FolderDashboardSearchAPI.json";
@@ -46,6 +40,7 @@ public class ConfigLoader {
     private final AdminOrganisationAPI adminOrganisationAPI;
     private final AdminUserAPI adminUserAPI;
     private final CurrOrganisationAPI currOrganisationAPI;
+    private final DataSourceAPI dataSourceAPI;
     private final DashboardAPI dashboardAPI;
     private final FolderAPI folderAPI;
     private final FolderDashboardSearchAPI folderDashboardSearchAPI;
@@ -62,6 +57,7 @@ public class ConfigLoader {
         this.adminOrganisationAPI = gson.fromJson(getJsonElementFromPath(pathAdminOrganisationAPI), AdminOrganisationAPI.class);
         this.adminUserAPI = gson.fromJson(getJsonElementFromPath(pathAdminUserAPI), AdminUserAPI.class);
         this.currOrganisationAPI = gson.fromJson(getJsonElementFromPath(pathCurrOrganisationAPI), CurrOrganisationAPI.class);
+        this.dataSourceAPI = gson.fromJson(getJsonElementFromPath(pathDataSourceAPI), DataSourceAPI.class);
         this.dashboardAPI = gson.fromJson(getJsonElementFromPath(pathDashboardAPI), DashboardAPI.class);
         this.folderAPI = gson.fromJson(getJsonElementFromPath(pathFolderAPI), FolderAPI.class);
         this.folderDashboardSearchAPI = gson.fromJson(getJsonElementFromPath(pathFolderDashboardSearchAPI), FolderDashboardSearchAPI.class);
@@ -93,6 +89,14 @@ public class ConfigLoader {
      */
     public CurrOrganisationAPI getCurrOrganisationAPI() {
         return currOrganisationAPI;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public DataSourceAPI getDataSourceAPI() {
+        return dataSourceAPI;
     }
 
     /**

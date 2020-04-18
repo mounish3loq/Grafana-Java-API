@@ -10,9 +10,11 @@ import org.grafana.api.responses.Dashboard.DashboardTagRsp;
 import org.grafana.api.responses.Dashboard.DeleteDashboardRsp;
 import org.grafana.api.responses.Dashboard.HomeDashboardRsp;
 import org.grafana.api.responses.Dashboard.NewCreateUpdateDashboardRsp;
+import org.grafana.api.responses.DataSource.CreateDataSourceRsp;
 import org.grafana.api.responses.Folder.FolderRsp;
 import org.grafana.api.responses.MessageRsp;
 import org.grafana.api.templates.Dashboard.CreateUpdateDashboardTpl;
+import org.grafana.api.templates.DataSource.CreateDataSourceTpl;
 import org.grafana.api.templates.Folder.CreateFolderTpl;
 import org.grafana.api.templates.Organisation.AddOrgUserTpl;
 import org.grafana.api.templates.User.CreateUserInviteTpl;
@@ -70,6 +72,35 @@ public class OrgAdminAPI {
     public LinkedList<DashboardTagRsp> getDashboardTags() {
         RequestParam dashboardTag = grafanaAPI.getConfiguration().getDashboardAPI().getDashboardTags();
         return (new LinkedList(Arrays.asList(requestBuilder.setServerRequest(dashboardTag, DashboardTagRsp[].class))));
+    }
+
+    /**
+     *
+     * @param json
+     * @return
+     */
+    public CreateDataSourceRsp createDataSource(String json) {
+        return createDataSourceExtented(json);
+
+    }
+
+    /**
+     *
+     * @param dataSourceObj
+     * @return
+     */
+    public CreateDataSourceRsp createDataSource(CreateDataSourceTpl dataSourceObj) {
+        return createDataSourceExtented(gson.toJson(dataSourceObj));
+    }
+
+    /**
+     *
+     * @param json
+     * @return
+     */
+    private CreateDataSourceRsp createDataSourceExtented(String json) {
+        RequestParam createDataSource = grafanaAPI.getConfiguration().getDataSourceAPI().getCreateDataSource();
+        return requestBuilder.setServerRequest(createDataSource, CreateDataSourceRsp.class, json);
     }
 
     /**
