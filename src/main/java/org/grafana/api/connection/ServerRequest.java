@@ -118,7 +118,6 @@ public class ServerRequest {
                 try{
                     System.out.println(conn.getResponseCode());
                     InputStream stream = conn.getInputStream();
-
                     try (JsonReader jReader = new JsonReader(new InputStreamReader(stream))) {
                         Gson gson = new GsonBuilder().create();
                         jsonResult = gson.fromJson(jReader, JsonElement.class);
