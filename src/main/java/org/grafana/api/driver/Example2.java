@@ -4,15 +4,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.grafana.api.GrafanaAPI;
 import org.grafana.api.responses.Dashboard.NewCreateUpdateDashboardRsp;
-import org.grafana.api.templates.Charts.BarChartPanel;
+import org.grafana.api.templates.Charts.PlotlyPanelChart;
 import org.grafana.api.templates.Dashboard.CreateUpdateDashboardTpl;
 import org.grafana.api.templates.Dashboard.DashboardTpl;
 import org.grafana.api.templates.Dashboard.Panel.Pconfig.Traces.TraceMappingTpl;
 import org.grafana.api.templates.Dashboard.Panel.Pconfig.TracesTpl;
 import org.grafana.api.templates.Dashboard.Panel.TargetsTpl;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +19,10 @@ public class Example2 {
         Gson gson = new GsonBuilder().create();
         Gson gsonPretty = new GsonBuilder().setPrettyPrinting().create();
         String grafanaserver = "http://localhost:3000";
-        String mainOrgApiKey = "Bearer eyJrIjoiZ0ZNMVAyY0lTVHNMRzRSMmVMMTdIR0pHazlUSWlZQTUiLCJuIjoiSmF2YSBLZXkiLCJpZCI6MX0=";
+        String mainOrgApiKey = "Bearer eyJrIjoiSmtSNUY2R3RyV0hVQ0oxQ0E5NlJlZ0lXYVp4Z0s0T1QiLCJuIjoiVGVzdCBLZXkiLCJpZCI6MX0= ";
 
         //Initializing a panel
-        BarChartPanel barpanel = new BarChartPanel();
+        PlotlyPanelChart barpanel = new PlotlyPanelChart();
         barpanel.setDatasource("MySQL-pre");
 
         //Creating a mapping with axes to metrics

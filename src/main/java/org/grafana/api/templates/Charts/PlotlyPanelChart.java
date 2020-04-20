@@ -8,8 +8,8 @@ import org.grafana.api.templates.Dashboard.Panel.PconfigTpl;
 
 import java.util.ArrayList;
 
-public class BarChartPanel extends PanelTpl {
-    public BarChartPanel(){
+public class PlotlyPanelChart extends PanelTpl {
+    public PlotlyPanelChart(){
         super();
     }
 
