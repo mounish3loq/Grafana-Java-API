@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.grafana.api.GrafanaAPI;
 import org.grafana.api.responses.Dashboard.NewCreateUpdateDashboardRsp;
+import org.grafana.api.responses.DataSource.CreateDataSourceRsp;
 import org.grafana.api.templates.DataSource.CreateDataSourceTpl;
 import org.grafana.api.templates.DataSource.DataSourceJsonDataTpl;
 import org.grafana.api.templates.DataSource.SecureJsonDataTpl;
@@ -11,11 +12,11 @@ import org.grafana.api.templates.DataSource.SecureJsonDataTpl;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class Example3 {
+public class ExampleCreateDataSource {
     public static void main(String args[]){
         Gson gson = new GsonBuilder().create();
         String grafanaserver = "http://localhost:3000";
-        String mainOrgApiKey = "Bearer eyJrIjoiZ0ZNMVAyY0lTVHNMRzRSMmVMMTdIR0pHazlUSWlZQTUiLCJuIjoiSmF2YSBLZXkiLCJpZCI6MX0=";
+        String mainOrgApiKey = "Bearer eyJrIjoiSmtSNUY2R3RyV0hVQ0oxQ0E5NlJlZ0lXYVp4Z0s0T1QiLCJuIjoiVGVzdCBLZXkiLCJpZCI6MX0= ";
         GrafanaAPI grafanaAPI = new GrafanaAPI(grafanaserver);
         SecureJsonDataTpl pass = new SecureJsonDataTpl();
         pass.setPassword("12345");
@@ -29,6 +30,7 @@ public class Example3 {
         mysqldatasource.setSecureJsonData(pass);
         mysqldatasource.setAccess("proxy");
         mysqldatasource.setBasicAuth(false);
+        /*
         try{
             FileWriter fw = new FileWriter("dashtest.json");
             fw.write(gson.toJson(mysqldatasource));
@@ -36,7 +38,11 @@ public class Example3 {
         }catch (IOException ie){
             System.out.println("File error");
         }
-        System.out.println(grafanaAPI.orgAdminAPI(mainOrgApiKey).createDataSource(mysqldatasource));
+        */
+        CreateDataSourceRsp response = grafanaAPI.orgAdminAPI(mainOrgApiKey).createDataSource(mysqldatasource);
+        System.out.println(response.getMessage());
+        System.out.println(response.getId());
+        System.out.println(response.getName());
         //NewCreateUpdateDashboardRsp createDataSource = grafanaAPI.orgAdminAPI(mainOrgApiKey).createUpdateDashboard(dashTest);
     }
 }
