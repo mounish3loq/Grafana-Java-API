@@ -1,23 +1,16 @@
 package org.grafana.api.driver;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import ca.krasnay.sqlbuilder.SelectBuilder;
 import org.grafana.api.GrafanaAPI;
 import org.grafana.api.responses.Dashboard.NewCreateUpdateDashboardRsp;
 import org.grafana.api.templates.Charts.PlotlyPanelChart;
 import org.grafana.api.templates.Dashboard.CreateUpdateDashboardTpl;
 import org.grafana.api.templates.Dashboard.DashboardTpl;
-import org.grafana.api.templates.Dashboard.Panel.Pconfig.Traces.TraceMappingTpl;
-import org.grafana.api.templates.Dashboard.Panel.Pconfig.TracesTpl;
-import org.grafana.api.templates.Dashboard.Panel.TargetsTpl;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class Example2 {
+public class Example3 {
     public static void main(String args[]){
-        Gson gson = new GsonBuilder().create();
-        Gson gsonPretty = new GsonBuilder().setPrettyPrinting().create();
+        //Gson gson = new GsonBuilder().create();
+        //Gson gsonPretty = new GsonBuilder().setPrettyPrinting().create();
         String grafanaserver = "http://localhost:3000";
         String mainOrgApiKey = "Bearer eyJrIjoiSmtSNUY2R3RyV0hVQ0oxQ0E5NlJlZ0lXYVp4Z0s0T1QiLCJuIjoiVGVzdCBLZXkiLCJpZCI6MX0= ";
 
@@ -25,36 +18,16 @@ public class Example2 {
         PlotlyPanelChart barpanel = new PlotlyPanelChart();
         barpanel.setDatasource("MySQL-pre");
 
-        //Creating a mapping with axes to metrics
-        TraceMappingTpl tmpt = new TraceMappingTpl();
-        tmpt.setX("A");
-        tmpt.setY("B");
+        //Setting configuration: xaxis-title,yaxis-title,type of chart
+        barpanel.setPconfig("XData","YData","bar");
+        barpanel.setTraces("A","B");
 
-        //Creating a trace and passing the mapping object
-        TracesTpl trt = new TracesTpl();
-        trt.setMapping(tmpt);
-
-        //Creating a traces list and passing a trace object to it
-        ArrayList<TracesTpl> TracesTplList = new ArrayList<>();
-        TracesTplList.add(trt);
-
-        //Setting configuration: xaxis-title,yaxis-title,type of chart,traceslist
-        barpanel.setPconfig("XData","YData","bar",TracesTplList);
-
-        //Creating a target object which takes in an sql query
-        TargetsTpl tt = new TargetsTpl("select * from sample_table;");
-
-        //Creating a list of target objects and passing a target object to it
-        List<Object> TargetsTplList = new ArrayList<>();
-        TargetsTplList.add(tt);
-        //Setting target list.
-        barpanel.setTargets(TargetsTplList);
+        //Setting query
+        String query = new SelectBuilder().column("A").column("B").from("sample_table").toString();
+        barpanel.setTargets(query);
 
         //Setting title of panel
         barpanel.setTitle("Bar chart");
-
-        //Choosing type of plugin
-        barpanel.setType("natel-plotly-panel");
 
         //Initialising grafana server
         GrafanaAPI grafanaAPI = new GrafanaAPI(grafanaserver);
@@ -65,12 +38,8 @@ public class Example2 {
         //Creating a template for dashboard lower level
         DashboardTpl dashItems = new DashboardTpl();
 
-        //Creating a list of panels to and appending a panel to it.
-        List<Object> PanelsList = new ArrayList<>();
-        PanelsList.add(barpanel);
-
-        //Adding list of panels to dashboard
-        dashItems.setPanels(PanelsList);
+        //Adding list/single of panels to dashboard
+        dashItems.setPanels(barpanel);
 
         //Setting title for dashboard
         dashItems.setTitle("MyTestTitle");
@@ -92,5 +61,7 @@ public class Example2 {
         NewCreateUpdateDashboardRsp createUpdateDashboard = grafanaAPI.orgAdminAPI(mainOrgApiKey).createUpdateDashboard(dashTest);
         System.out.println("Response msg : " + createUpdateDashboard.getStatus());
         System.out.println("url is : " + createUpdateDashboard.getUrl());
+        System.out.println("Uid across grafana servers" + createUpdateDashboard.getUid());
+        System.out.println("id unique within a server" + createUpdateDashboard.getId());
     }
 }

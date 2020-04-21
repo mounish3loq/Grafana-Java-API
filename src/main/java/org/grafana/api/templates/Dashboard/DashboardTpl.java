@@ -1,10 +1,12 @@
 
 package org.grafana.api.templates.Dashboard;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import org.grafana.api.templates.Dashboard.Panel.PanelTpl;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -174,6 +176,9 @@ public class DashboardTpl {
      */
     public void setPanels(List<Object> panels) {
         this.panels = panels;
+    }
+    public void setPanels(PanelTpl panel) {
+        this.panels.add(panel);
     }
 
     /**

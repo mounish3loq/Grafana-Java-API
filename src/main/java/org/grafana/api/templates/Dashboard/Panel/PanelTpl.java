@@ -2,7 +2,6 @@ package org.grafana.api.templates.Dashboard.Panel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import org.grafana.api.templates.Dashboard.AnnotationsTpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,7 @@ public class PanelTpl {
     private PconfigTpl pconfig;
     @SerializedName("targets")
     @Expose
-    private List<Object> targets = new ArrayList<Object>();
+    private List<TargetsTpl> targets = new ArrayList<>();
     @SerializedName("timefrom")
     @Expose
     private Object timefrom;
@@ -40,7 +39,9 @@ public class PanelTpl {
     private Integer version;
 
     public PanelTpl(){
+        this.id = null;
         this.gridPos = new GridPosTpl();
+        this.pconfig = new PconfigTpl();
         this.timefrom = null;
         this.timeshift = null;
     }
@@ -112,7 +113,7 @@ public class PanelTpl {
      *
      * @return
      */
-    public List<Object> getTargets() {
+    public List<TargetsTpl> getTargets() {
         return targets;
     }
 
@@ -120,7 +121,7 @@ public class PanelTpl {
      *
      * @param targets
      */
-    public void setTargets(List<Object> targets) {
+    public void setTargets(List<TargetsTpl> targets) {
         this.targets = targets;
     }
 
