@@ -11,19 +11,19 @@ public class Example5 {
     public static void main(String args[]){
         //Gson gson = new GsonBuilder().create();
         //Gson gsonPretty = new GsonBuilder().setPrettyPrinting().create();
-        String grafanaserver = "http://localhost:3000";
-        String mainOrgApiKey = "Bearer eyJrIjoiSmtSNUY2R3RyV0hVQ0oxQ0E5NlJlZ0lXYVp4Z0s0T1QiLCJuIjoiVGVzdCBLZXkiLCJpZCI6MX0= ";
+        String grafanaserver = "http://172.105.54.174:9000";
+        String mainOrgApiKey = "Bearer eyJrIjoieDc1a1lLRXZYVm82Q2p3ZVpnU2RzNWN1RWMzYjhCSXIiLCJuIjoiVGVzdGluZyBBcGkga2V5IiwiaWQiOjF9";
 
         //Initializing a panel
         PlotlyPanelChart barpanel = new PlotlyPanelChart();
-        barpanel.setDatasource("MySQL-pre");
+        barpanel.setDatasource("PostgreSQL-5");
 
         //Setting configuration: xaxis-title,yaxis-title,type of chart
         barpanel.setPconfig("XData","YData","bar");
         barpanel.setTraces("A","B");
 
         //Setting query
-        String query = new SelectBuilder().column("A").column("B").from("sample_table").toString();
+        String query = new SelectBuilder().column("A").column("B").from("sample_data").toString();
         barpanel.setTargets(query);
 
         //Setting title of panel
@@ -43,7 +43,6 @@ public class Example5 {
 
         //Setting title for dashboard
         dashItems.setTitle("MyTestTitle2");
-        dashItems.setId(43);
 
         //Passing lower level dashboard to higher level dashboard
         dashTest.setDashboard(dashItems);
