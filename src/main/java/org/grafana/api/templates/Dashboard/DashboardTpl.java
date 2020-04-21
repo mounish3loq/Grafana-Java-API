@@ -3,7 +3,7 @@ package org.grafana.api.templates.Dashboard;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import org.grafana.api.templates.Dashboard.Panel.PanelTpl;
+import org.grafana.api.templates.Dashboard.PlotlyPanel.PlotlyPanelTpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,10 +31,10 @@ public class DashboardTpl {
     private Object id;
     @SerializedName("links")
     @Expose
-    private List<Object> links = new ArrayList<Object>();
+    private List<Object> links = new ArrayList<>();
     @SerializedName("panels")
     @Expose
-    private List<Object> panels = new ArrayList<Object>();
+    private List<Object> panels = new ArrayList<>();
     @SerializedName("refresh")
     @Expose
     private Boolean refresh;
@@ -177,7 +177,7 @@ public class DashboardTpl {
     public void setPanels(List<Object> panels) {
         this.panels = panels;
     }
-    public void setPanels(PanelTpl panel) {
+    public void setPanels(PlotlyPanelTpl panel) {
         this.panels.add(panel);
     }
 

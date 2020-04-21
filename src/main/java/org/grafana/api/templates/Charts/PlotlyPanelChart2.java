@@ -1,14 +1,14 @@
 package org.grafana.api.templates.Charts;
-import org.grafana.api.templates.Dashboard.Panel.PanelTpl;
-import org.grafana.api.templates.Dashboard.Panel.Pconfig.Layout.AxisTpl;
-import org.grafana.api.templates.Dashboard.Panel.Pconfig.PconfigLayoutTpl;
-import org.grafana.api.templates.Dashboard.Panel.Pconfig.PconfigSettingsTpl;
-import org.grafana.api.templates.Dashboard.Panel.Pconfig.TracesTpl;
-import org.grafana.api.templates.Dashboard.Panel.PconfigTpl;
+import org.grafana.api.templates.Dashboard.PlotlyPanel.PlotlyPanelTpl;
+import org.grafana.api.templates.Dashboard.PlotlyPanel.Pconfig.Layout.AxisTpl;
+import org.grafana.api.templates.Dashboard.PlotlyPanel.Pconfig.PconfigLayoutTpl;
+import org.grafana.api.templates.Dashboard.PlotlyPanel.Pconfig.PconfigSettingsTpl;
+import org.grafana.api.templates.Dashboard.PlotlyPanel.Pconfig.TracesTpl;
+import org.grafana.api.templates.Dashboard.PlotlyPanel.PlotlyPconfigTpl;
 
 import java.util.ArrayList;
 
-public class PlotlyPanelChart2 extends PanelTpl {
+public class PlotlyPanelChart2 extends PlotlyPanelTpl {
     public PlotlyPanelChart2(){
         super();
     }
@@ -33,7 +33,7 @@ public class PlotlyPanelChart2 extends PanelTpl {
         pconfigSettingsTpl.setType(charttype);
 
         //Passing layout,settings,traces to pconfig object
-        PconfigTpl pconfigTpl = new PconfigTpl();
+        PlotlyPconfigTpl pconfigTpl = new PlotlyPconfigTpl();
         pconfigTpl.setLayout(pconfigLayoutTpl);
         pconfigTpl.setSettings(pconfigSettingsTpl);
         pconfigTpl.setTraces(traceslist);

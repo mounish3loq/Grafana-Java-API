@@ -2,12 +2,13 @@ package org.grafana.api.driver;
 
 import ca.krasnay.sqlbuilder.SelectBuilder;
 import org.grafana.api.GrafanaAPI;
+import org.grafana.api.responses.Dashboard.DashboardRsp;
 import org.grafana.api.responses.Dashboard.NewCreateUpdateDashboardRsp;
 import org.grafana.api.templates.Charts.PlotlyPanelChart;
 import org.grafana.api.templates.Dashboard.CreateUpdateDashboardTpl;
 import org.grafana.api.templates.Dashboard.DashboardTpl;
 
-public class Example3 {
+public class Example6 {
     public static void main(String[] args){
         //Gson gson = new GsonBuilder().create();
         //Gson gsonPretty = new GsonBuilder().setPrettyPrinting().create();
@@ -27,7 +28,7 @@ public class Example3 {
         barpanel.setTargets(query);
 
         //Setting title of panel
-        barpanel.setTitle("Bar chart");
+        barpanel.setTitle("Bar chart2");
 
         //Initialising grafana server
         GrafanaAPI grafanaAPI = new GrafanaAPI(grafanaserver);
@@ -36,18 +37,19 @@ public class Example3 {
         CreateUpdateDashboardTpl dashTest = new CreateUpdateDashboardTpl();
 
         //Creating a template for dashboard lower level
-        DashboardTpl dashItems = new DashboardTpl();
+        DashboardRsp dashboardRsp = grafanaAPI.orgAdminAPI(mainOrgApiKey).getDashboardByUid("mV-Sp13Zk");
+        DashboardTpl dashItems = dashboardRsp.getDashboard();
 
         //Adding list/single of panels to dashboard
         dashItems.setPanels(barpanel);
-        dashItems.setId(44);
+        //dashItems.setId(44);
 
         //Setting title for dashboard
         //dashItems.setTitle("MyTestTitle2");
 
         //Passing lower level dashboard to higher level dashboard
         dashTest.setDashboard(dashItems);
-        dashTest.setOverwrite(false);
+        dashTest.setOverwrite(true);
 
         /* Store generated dashboard json data
         try{

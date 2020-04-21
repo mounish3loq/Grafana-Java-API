@@ -1,19 +1,19 @@
 package org.grafana.api.templates.Charts;
 
-import org.grafana.api.templates.Dashboard.Panel.PanelTpl;
-import org.grafana.api.templates.Dashboard.Panel.Pconfig.Layout.AxisTpl;
-import org.grafana.api.templates.Dashboard.Panel.Pconfig.PconfigLayoutTpl;
-import org.grafana.api.templates.Dashboard.Panel.Pconfig.PconfigSettingsTpl;
-import org.grafana.api.templates.Dashboard.Panel.Pconfig.Traces.TraceMappingTpl;
-import org.grafana.api.templates.Dashboard.Panel.Pconfig.TracesTpl;
-import org.grafana.api.templates.Dashboard.Panel.PconfigTpl;
-import org.grafana.api.templates.Dashboard.Panel.TargetsTpl;
+import org.grafana.api.templates.Dashboard.PlotlyPanel.PlotlyPanelTpl;
+import org.grafana.api.templates.Dashboard.PlotlyPanel.Pconfig.Layout.AxisTpl;
+import org.grafana.api.templates.Dashboard.PlotlyPanel.Pconfig.PconfigLayoutTpl;
+import org.grafana.api.templates.Dashboard.PlotlyPanel.Pconfig.PconfigSettingsTpl;
+import org.grafana.api.templates.Dashboard.PlotlyPanel.Pconfig.Traces.TraceMappingTpl;
+import org.grafana.api.templates.Dashboard.PlotlyPanel.Pconfig.TracesTpl;
+import org.grafana.api.templates.Dashboard.PlotlyPanel.PlotlyPconfigTpl;
+import org.grafana.api.templates.Dashboard.PlotlyPanel.PlotlyTargetsTpl;
 
 import java.util.ArrayList;
 
-public class PlotlyPanelChart extends PanelTpl {
+public class PlotlyPanelChart extends PlotlyPanelTpl {
     ArrayList<TracesTpl> listofTraces;
-    ArrayList<TargetsTpl> listofTargets;
+    ArrayList<PlotlyTargetsTpl> listofTargets;
     public PlotlyPanelChart(){
         super();
         this.setType("natel-plotly-panel"); //Choosing type of plugin
@@ -41,13 +41,13 @@ public class PlotlyPanelChart extends PanelTpl {
         pconfigSettingsTpl.setType(charttype);
 
         //Passing layout,settings,traces to pconfig object
-        PconfigTpl pconfigTpl = this.getPconfig();
+        PlotlyPconfigTpl pconfigTpl = this.getPconfig();
         pconfigTpl.setLayout(pconfigLayoutTpl);
         pconfigTpl.setSettings(pconfigSettingsTpl);
         this.setPconfig(pconfigTpl);
     }
     public void setTraces(String xmapping,String ymapping){
-        PconfigTpl pconfigTpl = this.getPconfig();
+        PlotlyPconfigTpl pconfigTpl = this.getPconfig();
 
         //Creating a mapping with axes to metrics
         TraceMappingTpl traceMappingTpl = new TraceMappingTpl();
@@ -64,7 +64,7 @@ public class PlotlyPanelChart extends PanelTpl {
     public void setTargets(String query){
 
         //Creating a target object which takes in an sql query
-        TargetsTpl targetsTpl = new TargetsTpl(query);
+        PlotlyTargetsTpl targetsTpl = new PlotlyTargetsTpl(query);
         this.listofTargets.add(targetsTpl);
         this.setTargets(listofTargets);
     }

@@ -1,1 +1,1 @@
-{"datasource":{"id":15,"orgId":1,"name":"Mysql2","type":"mysql","typeLogoUrl":"","access":"proxy","url":"http://localhost:3306","password":"","user":"root","database":"pre_post_analysis","basicAuth":false,"basicAuthUser":"","basicAuthPassword":"","withCredentials":false,"isDefault":false,"jsonData":{},"secureJsonFields":{"password":true},"version":1,"readOnly":false},"id":15,"message":"Datasource added","name":"Mysql2"}
+{"id":44,"slug":"mytesttitle","status":"success","uid":"mV-Sp13Zk","url":"/d/mV-Sp13Zk/mytesttitle","version":1}

@@ -3,6 +3,7 @@ package org.grafana.api.responses.Dashboard;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import org.grafana.api.templates.Dashboard.DashboardTpl;
 
 /**
  *
@@ -12,22 +13,22 @@ public class DashboardRsp {
 
     @SerializedName("dashboard")
     @Expose
-    private DashboardRsp__1 dashboard;
+    private DashboardTpl dashboard;
     @SerializedName("meta")
     @Expose
     private MetaRsp meta;
 
     /**
      *
-     * @return
+     * @return DashboardTpl
      */
-    public DashboardRsp__1 getDashboard() {
+    public DashboardTpl getDashboard() {
         return dashboard;
     }
 
     /**
      *
-     * @return
+     * @return MetaRsp
      */
     public MetaRsp getMeta() {
         return meta;
