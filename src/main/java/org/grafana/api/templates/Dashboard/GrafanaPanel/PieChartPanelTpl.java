@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName;
 import org.grafana.api.templates.Dashboard.PlotlyPanel.PlotlyPanelTpl;
 import org.grafana.api.templates.Dashboard.PlotlyPanel.PlotlyTargetsTpl;
 
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 
@@ -59,9 +58,7 @@ public class PieChartPanelTpl extends PlotlyPanelTpl {
     @Expose
     private CombineTpl combine;
 
-    private ArrayList<PlotlyTargetsTpl> listofTargets;
     public PieChartPanelTpl(){
-        this.listofTargets = new ArrayList<>();
         this.setType("grafana-piechart-panel");
         this.combine = new CombineTpl();
         this.legend = new GrafanaLegendTpl();
@@ -86,7 +83,8 @@ public class PieChartPanelTpl extends PlotlyPanelTpl {
         //Creating a target object which takes in an sql query
         PlotlyTargetsTpl targetsTpl = new PlotlyTargetsTpl(query);
         targetsTpl.setFormat(format);
-        this.listofTargets.add(targetsTpl);
+        List<PlotlyTargetsTpl> listofTargets= this.getTargets();
+        listofTargets.add(targetsTpl);
         this.setTargets(listofTargets);
     }
 

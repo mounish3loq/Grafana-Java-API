@@ -10,6 +10,7 @@ import org.grafana.api.templates.Dashboard.PlotlyPanel.PlotlyPconfigTpl;
 import org.grafana.api.templates.Dashboard.PlotlyPanel.PlotlyTargetsTpl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PlotlyPanelChart extends PlotlyPanelTpl {
     ArrayList<TracesTpl> listofTraces;
@@ -65,7 +66,8 @@ public class PlotlyPanelChart extends PlotlyPanelTpl {
 
         //Creating a target object which takes in an sql query
         PlotlyTargetsTpl targetsTpl = new PlotlyTargetsTpl(query);
-        this.listofTargets.add(targetsTpl);
+        List<PlotlyTargetsTpl> listofTargets = this.getTargets();
+        listofTargets.add(targetsTpl);
         this.setTargets(listofTargets);
     }
 }

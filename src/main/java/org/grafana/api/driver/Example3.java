@@ -40,10 +40,9 @@ public class Example3 {
 
         //Adding list/single of panels to dashboard
         dashItems.setPanels(barpanel);
-        dashItems.setId(44);
 
         //Setting title for dashboard
-        //dashItems.setTitle("MyTestTitle2");
+        dashItems.setTitle("MyTestTitle2");
 
         //Passing lower level dashboard to higher level dashboard
         dashTest.setDashboard(dashItems);
@@ -61,9 +60,9 @@ public class Example3 {
 
         //Calling dashboard creation API endpoint.
         NewCreateUpdateDashboardRsp createUpdateDashboard = grafanaAPI.orgAdminAPI(mainOrgApiKey).createUpdateDashboard(dashTest);
-        //System.out.println("Response msg : " + createUpdateDashboard.getStatus());
-        //System.out.println("url is : " + createUpdateDashboard.getUrl());
-        //System.out.println("Uid across grafana servers" + createUpdateDashboard.getUid());
-        //System.out.println("id unique within a server" + createUpdateDashboard.getId());
+        System.out.println("Response msg : " + createUpdateDashboard.getStatus());
+        System.out.println("url is : " + createUpdateDashboard.getUrl());
+        System.out.println("Uid across grafana servers" + createUpdateDashboard.getUid());
+        System.out.println("id unique within a server" + createUpdateDashboard.getId());
     }
 }
