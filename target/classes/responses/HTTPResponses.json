@@ -1,7 +1,0 @@
-{
-    "200":"Created/Found/Deleted",
-    "400":"Errors (invalid json, missing or invalid fields, etc)",
-    "401":"Unauthorized",
-    "403":"Access denied",
-    "412":"Precondition failed"
-}
