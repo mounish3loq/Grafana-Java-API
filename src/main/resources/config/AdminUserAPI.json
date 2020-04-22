@@ -1,0 +1,74 @@
+{
+    "Version": "0.1",
+    "Authentication": "Basic",
+    "Link": "http://docs.grafana.org/http_api/admin",
+    
+    
+    "UsersList": {
+        "Methode": "GET",
+        "URL": "/api/users",
+        "Response": "/responses/AdminAPI/User.json"
+    },
+    "UserByID": {
+        "Methode": "GET",
+        "URL": "/api/users/:id",
+        "Parameter": ":id",
+        "Response": "/responses/AdminAPI/User.json"
+    },
+    "UserByLoginEmail": {
+        "Methode": "GET",
+        "URL": "/api/users/lookup?loginOrEmail=:loginOrEmail",
+        "Parameter": ":loginOrEmail",
+        "Response": "/responses/AdminAPI/User.json"
+    },
+    "UserOrgsByID": {
+        "Methode": "GET",
+        "URL": "/api/users/:id/orgs",
+        "Parameter": ":id",
+        "Response": "/responses/AdminAPI/GetUserOrgsByID.json"
+    },
+    "CurrUserContext": {
+        "Methode": "GET",
+        "URL": "/api/user",
+        "Response": "/responses/AdminApi/User.json"
+    },
+    "CreateUserConf": {
+        "Methode": "POST",
+        "URL": "/api/admin/users",
+        "Response": "/responses/AdminAPI/NewUser.json",
+        "Template": "/templates/User/CreateUser.json"
+    },
+    "SwitchUserOrgContext": {
+        "Methode": "POST",
+        "URL": "/api/user/using/:orgId",
+        "Parameter": ":orgId",
+        "Response": "/responses/Message.json"
+    },
+    "UpdateUser": {
+        "Methode": "PUT",
+        "URL": "/api/users/:id",
+        "Parameter": ":id",
+        "Response": "/responses/Message.json",
+        "Template": "/templates/User/UpdateUser.json"
+    },
+    "SetPasswordByID": {
+        "Methode": "PUT",
+        "URL": "/api/admin/users/:id/password",
+        "Parameter": ":id",
+        "Response": "/responses/Message.json",
+        "Template": "/templates/User/SetPasswordByID.json"
+    },
+    "SetPermissionByID": {
+        "Methode": "PUT",
+        "URL": "/api/admin/users/:id/permissions",
+        "Parameter": ":id",
+        "Response": "/responses/Message.json",
+        "Template": "/templates/User/SetPermissionByID.json"
+    },
+    "DeleteByID": {
+        "Methode": "DELETE",
+        "URL": "/api/admin/users/:id",
+        "Parameter": ":id",
+        "Response": "/responses/Message.json"
+    }
+}

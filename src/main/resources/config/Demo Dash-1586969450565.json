@@ -1,0 +1,162 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "$$hashKey": "object:212",
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 18,
+  "links": [],
+  "panels": [
+    {
+      "datasource": "MySQL-pre",
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "pconfig": {
+        "fixScale": "",
+        "layout": {
+          "dragmode": "lasso",
+          "font": {
+            "family": "\"Open Sans\", Helvetica, Arial, sans-serif"
+          },
+          "hovermode": "closest",
+          "legend": {
+            "orientation": "h"
+          },
+          "showlegend": false,
+          "xaxis": {
+            "rangemode": "normal",
+            "showgrid": true,
+            "type": "auto",
+            "zeroline": false
+          },
+          "yaxis": {
+            "rangemode": "normal",
+            "showgrid": true,
+            "type": "auto",
+            "zeroline": false
+          },
+          "zaxis": {
+            "rangemode": "normal",
+            "showgrid": true,
+            "type": "linear",
+            "zeroline": false
+          }
+        },
+        "loadFromCDN": false,
+        "settings": {
+          "displayModeBar": false,
+          "type": "bar"
+        },
+        "showAnnotations": true,
+        "traces": [
+          {
+            "mapping": {
+              "color": "A",
+              "size": null,
+              "text": null,
+              "x": "A",
+              "y": "B",
+              "z": null
+            },
+            "name": "Trace 1",
+            "settings": {
+              "color_option": "ramp",
+              "line": {
+                "color": "#005f81",
+                "dash": "solid",
+                "shape": "linear",
+                "width": 6
+              },
+              "marker": {
+                "color": "#33B5E5",
+                "colorscale": "YlOrRd",
+                "line": {
+                  "color": "#DDD",
+                  "width": 0
+                },
+                "showscale": false,
+                "size": 15,
+                "sizemin": 3,
+                "sizemode": "diameter",
+                "sizeref": 0.2,
+                "symbol": "circle"
+              }
+            },
+            "show": {
+              "line": true,
+              "markers": false
+            }
+          }
+        ]
+      },
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "select * from sample_table;",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Panel Title",
+      "type": "natel-plotly-panel",
+      "version": 1
+    }
+  ],
+  "schemaVersion": 22,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Demo Dash",
+  "uid": "DaUHKkqZk",
+  "variables": {
+    "list": []
+  },
+  "version": 1
+}

@@ -1,0 +1,24 @@
+{
+    "Version": "0.1",
+    "Authentication": "Basic",
+    "Link": "http://docs.grafana.org/http_api/auth/",
+    
+    
+    "ApiKeyList": {
+        "Methode": "GET",
+        "URL": "/api/auth/keys",
+        "Response": "/responses/AdminAPI/ApiKey.json"
+    },
+    "CreateApiKey": {
+        "Methode": "POST",
+        "URL": "/api/auth/keys",
+        "Response": "/responses/AdminAPI/NewApiKey",
+        "Template": "/templates/AdminAPI/CreateApiKey.json"
+    },
+    "DeleteApiKeyByID": {
+        "Methode": "DELETE",
+        "URL": "/api/auth/keys/:id",
+        "Parameter": ":id",
+        "Response": "/responses/Message.json"
+    }
+}

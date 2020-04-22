@@ -1,0 +1,22 @@
+{
+    "Version": "0.1",
+    "Authentication": "oAuth",
+    "Link": "http://docs.grafana.org/http_api/folder_dashboard_search/",
+    
+    
+    "SearchGrafana": {
+        "Methode": "GET",
+        "URL": "/api/search?",
+        "URLParameters": {
+            "Query": "query=",
+            "Tag": "tag=",
+            "Type": "type=",
+            "DashboardIds": "dashboardIds=",
+            "FolderIds": "folderIds=",
+            "Starred":"starred=",
+            "Limit":"limit="
+        },
+        "Response": "/responses/FolderDashboardSearch.json",
+        "Template": "/templates/Search/FolderDashboard.json"
+    }
+}
