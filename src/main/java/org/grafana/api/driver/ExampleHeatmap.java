@@ -5,14 +5,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.grafana.api.GrafanaAPI;
 import org.grafana.api.responses.Dashboard.NewCreateUpdateDashboardRsp;
-import org.grafana.api.templates.Charts.PlotlyPanelChart;
+import org.grafana.api.templates.Charts.PlotlyHeatmapPanelChart;
 import org.grafana.api.templates.Dashboard.CreateUpdateDashboardTpl;
 import org.grafana.api.templates.Dashboard.DashboardTpl;
 
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class Example3 {
+public class ExampleHeatmap {
     public static void main(String[] args){
         Gson gson = new GsonBuilder().create();
         //Gson gsonPretty = new GsonBuilder().setPrettyPrinting().create();
@@ -20,19 +20,45 @@ public class Example3 {
         String mainOrgApiKey = "Bearer eyJrIjoiSmtSNUY2R3RyV0hVQ0oxQ0E5NlJlZ0lXYVp4Z0s0T1QiLCJuIjoiVGVzdCBLZXkiLCJpZCI6MX0= ";
 
         //Initializing a panel
-        PlotlyPanelChart barpanel = new PlotlyPanelChart();
-        barpanel.setDatasource("MySQL-pre");
+        PlotlyHeatmapPanelChart heatmapPanel = new PlotlyHeatmapPanelChart();
+        heatmapPanel.setDatasource("MySQL-pre");
 
         //Setting configuration: xaxis-title,yaxis-title,type of chart
-        barpanel.setPconfig("XData","YData","bar");
-        barpanel.setTraces("A","B");
+        heatmapPanel.setPconfig("XData","YData");
+        heatmapPanel.setTraces("category","category","Agencia_de_tur");
 
         //Setting query
-        String query = new SelectBuilder().column("A").column("B").from("sample_table").toString();
-        barpanel.setTargets(query);
+        String query = new SelectBuilder().column("category").from("insight8").toString();
+        heatmapPanel.setTargets(query);
+        String query2 = new SelectBuilder()
+                            .column("Agencia_de_tur")
+                            .column("Alug_de_carros")
+                            .column("ARTIGOS_ELETRO")
+                            .column("AUTO_PECAS")
+                            .column("CIA_AEREAS")
+                            .column("FARMACIAS")
+                            .column("HOSP_E_CLINICA")
+                            .column("HOTEIS")
+                            .column("INEXISTENTE")
+                            .column("JOALHERIA")
+                            .column("LOJA_DE_DEPART")
+                            .column("MOTO")
+                            .column("MAT_CONSTRUCAO")
+                            .column("MOVEIS_E_DECOR")
+                            .column("POSTO_DE_GAS")
+                            .column("RESTAURANTE")
+                            .column("SEM_RAMO")
+                            .column("SERVICO")
+                            .column("SUPERMERCADOS")
+                            .column("TRANS_FINANC")
+                            .column("VAREJO")
+                            .column("VESTUARIO")
+                            .from("insight8")
+                            .toString();
+        heatmapPanel.setTargets(query2);
 
         //Setting title of panel
-        barpanel.setTitle("Bar chart");
+        heatmapPanel.setTitle("Bar chart");
 
         //Initialising grafana server
         GrafanaAPI grafanaAPI = new GrafanaAPI(grafanaserver);
@@ -44,14 +70,14 @@ public class Example3 {
         DashboardTpl dashItems = new DashboardTpl();
 
         //Adding list/single of panels to dashboard
-        dashItems.setPanels(barpanel);
+        dashItems.setPanels(heatmapPanel);
 
         //Setting title for dashboard
         dashItems.setTitle("MyTestTitle2");
 
         //Passing lower level dashboard to higher level dashboard
         dashTest.setDashboard(dashItems);
-        dashTest.setOverwrite(false);
+        //dashTest.setOverwrite(false);
 
         //Store generated dashboard json data
         try{

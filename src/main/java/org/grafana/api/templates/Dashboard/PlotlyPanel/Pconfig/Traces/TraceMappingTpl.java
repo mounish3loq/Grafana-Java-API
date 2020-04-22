@@ -26,7 +26,7 @@ public class TraceMappingTpl {
 
     @SerializedName("z")
     @Expose
-    private Object z;
+    private String z;
 
     public TraceMappingTpl(){
         this.color = null;
@@ -77,11 +77,11 @@ public class TraceMappingTpl {
         this.y = y;
     }
 
-    public Object getZ() {
+    public String getZ() {
         return z;
     }
 
-    public void setZ(Object z) {
+    public void setZ(String z) {
         this.z = z;
     }
 }

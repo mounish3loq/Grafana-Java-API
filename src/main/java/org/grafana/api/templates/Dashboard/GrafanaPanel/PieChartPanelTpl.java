@@ -80,10 +80,12 @@ public class PieChartPanelTpl extends PlotlyPanelTpl {
 
     public void setTargets(String query,String format){
 
+        List<PlotlyTargetsTpl> listofTargets= this.getTargets();
         //Creating a target object which takes in an sql query
         PlotlyTargetsTpl targetsTpl = new PlotlyTargetsTpl(query);
+        targetsTpl.setRefId(String.valueOf(listofTargets.size()));
         targetsTpl.setFormat(format);
-        List<PlotlyTargetsTpl> listofTargets= this.getTargets();
+
         listofTargets.add(targetsTpl);
         this.setTargets(listofTargets);
     }
