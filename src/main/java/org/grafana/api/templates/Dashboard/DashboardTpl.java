@@ -3,6 +3,7 @@ package org.grafana.api.templates.Dashboard;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import org.grafana.api.templates.Dashboard.GrafanaPanel.GrafanaBasePanelTpl;
 import org.grafana.api.templates.Dashboard.PlotlyPanel.PlotlyPanelTpl;
 
 import java.util.ArrayList;
@@ -180,6 +181,7 @@ public class DashboardTpl {
     public void setPanels(PlotlyPanelTpl panel) {
         this.panels.add(panel);
     }
+    public void setPanels(GrafanaBasePanelTpl panel){this.panels.add(panel);}
 
     /**
      *
