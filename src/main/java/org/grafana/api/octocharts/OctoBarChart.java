@@ -7,7 +7,7 @@ import org.grafana.api.templates.Charts.PlotlyPanelChart;
 import org.grafana.api.templates.Dashboard.CreateUpdateDashboardTpl;
 import org.grafana.api.templates.Dashboard.DashboardTpl;
 
-public class OctoBarChart {
+public class OctoBarChart extends OctoBaseChart{
     private String uid;
     private String dashboardtitle;
     public PlotlyPanelChart barpanel;
@@ -29,26 +29,7 @@ public class OctoBarChart {
         this.dashboardtitle = dashboardtitle;
     }
     public void publish(){
-        String grafanaserver = "http://localhost:3000";
-        String mainOrgApiKey = "Bearer eyJrIjoiSmtSNUY2R3RyV0hVQ0oxQ0E5NlJlZ0lXYVp4Z0s0T1QiLCJuIjoiVGVzdCBLZXkiLCJpZCI6MX0= ";
-        GrafanaAPI grafanaAPI = new GrafanaAPI(grafanaserver);
-        DashboardTpl dashItems;
-        DashboardRsp dashboardRsp = grafanaAPI.orgAdminAPI(mainOrgApiKey).getDashboardByUid(this.uid);
-        if (dashboardRsp == null){
-            dashItems = new DashboardTpl();
-            dashItems.setUid(this.uid);
-            if (this.dashboardtitle == null) {
-                dashItems.setTitle("MyTestTitle2");
-            }else{
-                dashItems.setTitle(this.dashboardtitle);
-            }
-        }else{
-            dashItems = dashboardRsp.getDashboard();
-        }
-        CreateUpdateDashboardTpl dashTest = new CreateUpdateDashboardTpl();
-        dashItems.setPanels(this.barpanel);
-        dashTest.setDashboard(dashItems);
-        NewCreateUpdateDashboardRsp createUpdateDashboard = grafanaAPI.orgAdminAPI(mainOrgApiKey).createUpdateDashboard(dashTest);
+        publish(this.uid,null,this.barpanel);
     }
 
 }
