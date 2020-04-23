@@ -30,6 +30,9 @@ public class DashboardTpl {
     @SerializedName("id")
     @Expose
     private Object id;
+    @SerializedName("uid")
+    @Expose
+    private Object uid;
     @SerializedName("links")
     @Expose
     private List<Object> links = new ArrayList<>();
@@ -146,6 +149,22 @@ public class DashboardTpl {
     public void setId(Object id) {
         this.id = id;
     }
+    /**
+     *
+     * @return
+     */
+    public Object getUid() {
+        return uid;
+    }
+
+    /**
+     *
+     * @param uid
+     */
+    public void setUid(Object uid) {
+        this.uid = uid;
+    }
+
 
     /**
      *
