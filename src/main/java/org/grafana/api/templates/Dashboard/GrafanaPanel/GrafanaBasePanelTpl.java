@@ -20,10 +20,10 @@ public class GrafanaBasePanelTpl {
     @SerializedName("id")
     @Expose
     private Object id;
-
-    @SerializedName("targets")
-    @Expose
-    private List<LineGraphTargetsTpl> targets = new ArrayList<>();
+//
+//    @SerializedName("targets")
+//    @Expose
+//    private List<LineGraphTargetsTpl> targets = new ArrayList<>();
 
     @SerializedName("timefrom")
     @Expose
@@ -66,13 +66,13 @@ public class GrafanaBasePanelTpl {
     }
 
 
-    public List<LineGraphTargetsTpl> getTargets() {
-        return targets;
-    }
-
-    public void setTargets(List<LineGraphTargetsTpl> targets) {
-        this.targets = targets;
-    }
+//    public List<LineGraphTargetsTpl> getTargets() {
+//        return targets;
+//    }
+//
+//    public void setTargets(List<LineGraphTargetsTpl> targets) {
+//        this.targets = targets;
+//    }
 
     public Object getTimefrom() {
         return timefrom;

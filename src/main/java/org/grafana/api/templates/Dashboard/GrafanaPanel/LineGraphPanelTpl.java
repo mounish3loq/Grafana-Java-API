@@ -9,6 +9,26 @@ import java.util.List;
 
 public class LineGraphPanelTpl extends GrafanaBasePanelTpl {
 
+    @SerializedName("targets")
+    @Expose
+    private List<LineGraphTargetsTpl> targets = new ArrayList<>();
+
+    public List<LineGraphTargetsTpl> getTargets() {
+        return targets;
+    }
+
+    public void setTargets(List<LineGraphTargetsTpl> targets) {
+        this.targets = targets;
+    }
+
+    public void setTargets(String query,String table,String format){
+        //Creating a target object which takes in an sql query
+        LineGraphTargetsTpl targetsTpl = new LineGraphTargetsTpl(query,table,format);
+        List<LineGraphTargetsTpl> listofTargets= this.getTargets();
+        listofTargets.add(targetsTpl);
+        this.setTargets(listofTargets);
+    }
+
 
     public String getAliasColors() {
         return aliasColors;
@@ -218,13 +238,7 @@ public class LineGraphPanelTpl extends GrafanaBasePanelTpl {
         this.yaxes = yaxes;
     }
 
-    public void setTargets(String query,String table,String format){
-        //Creating a target object which takes in an sql query
-        LineGraphTargetsTpl targetsTpl = new LineGraphTargetsTpl(query,table,format);
-        List<LineGraphTargetsTpl> listofTargets= this.getTargets();
-        listofTargets.add(targetsTpl);
-        this.setTargets(listofTargets);
-    }
+
 
     @SerializedName("aliasColors")
     @Expose
