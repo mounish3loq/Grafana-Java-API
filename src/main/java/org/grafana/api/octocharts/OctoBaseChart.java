@@ -7,6 +7,7 @@ import org.grafana.api.responses.Dashboard.DashboardRsp;
 import org.grafana.api.responses.Dashboard.NewCreateUpdateDashboardRsp;
 import org.grafana.api.templates.Dashboard.CreateUpdateDashboardTpl;
 import org.grafana.api.templates.Dashboard.DashboardTpl;
+import org.grafana.api.templates.Dashboard.GrafanaPanel.LineGraphPanelTpl;
 import org.grafana.api.templates.Dashboard.PlotlyPanel.PlotlyPanelTpl;
 import org.apache.spark.sql.Dataset;
 
@@ -26,6 +27,28 @@ public abstract class OctoBaseChart {
                 .jdbc("jdbc:postgresql://localhost:5432/SampleDatabase", tableName, connectionProperties);
     }
     public void publish(String uid, String dashboardtitle, PlotlyPanelTpl panel){
+        String grafanaserver = "http://localhost:3000";
+        String mainOrgApiKey = "Bearer eyJrIjoiSmtSNUY2R3RyV0hVQ0oxQ0E5NlJlZ0lXYVp4Z0s0T1QiLCJuIjoiVGVzdCBLZXkiLCJpZCI6MX0= ";
+        GrafanaAPI grafanaAPI = new GrafanaAPI(grafanaserver);
+        DashboardTpl dashItems;
+        DashboardRsp dashboardRsp = grafanaAPI.orgAdminAPI(mainOrgApiKey).getDashboardByUid(uid);
+        if (dashboardRsp == null){
+            dashItems = new DashboardTpl();
+            dashItems.setUid(uid);
+            if (dashboardtitle == null) {
+                dashItems.setTitle("MyTestTitle2");
+            }else{
+                dashItems.setTitle(dashboardtitle);
+            }
+        }else{
+            dashItems = dashboardRsp.getDashboard();
+        }
+        CreateUpdateDashboardTpl dashTest = new CreateUpdateDashboardTpl();
+        dashItems.setPanels(panel);
+        dashTest.setDashboard(dashItems);
+        NewCreateUpdateDashboardRsp createUpdateDashboard = grafanaAPI.orgAdminAPI(mainOrgApiKey).createUpdateDashboard(dashTest);
+    }
+    public void publish(String uid, String dashboardtitle, LineGraphPanelTpl panel){
         String grafanaserver = "http://localhost:3000";
         String mainOrgApiKey = "Bearer eyJrIjoiSmtSNUY2R3RyV0hVQ0oxQ0E5NlJlZ0lXYVp4Z0s0T1QiLCJuIjoiVGVzdCBLZXkiLCJpZCI6MX0= ";
         GrafanaAPI grafanaAPI = new GrafanaAPI(grafanaserver);
