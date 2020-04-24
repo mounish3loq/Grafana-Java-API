@@ -14,6 +14,24 @@ import java.util.List;
  * @author jh
  */
 public class DashboardTpl {
+    /**
+     *
+     * @return
+     */
+    public String getUid() {
+        return uid;
+    }
+    /**
+     *
+     * @param uid
+     */
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    @SerializedName("uid")
+    @Expose
+    private String uid;
 
     @SerializedName("annotations")
     @Expose
@@ -30,9 +48,6 @@ public class DashboardTpl {
     @SerializedName("id")
     @Expose
     private Object id;
-    @SerializedName("uid")
-    @Expose
-    private Object uid;
     @SerializedName("links")
     @Expose
     private List<Object> links = new ArrayList<>();
@@ -149,22 +164,6 @@ public class DashboardTpl {
     public void setId(Object id) {
         this.id = id;
     }
-    /**
-     *
-     * @return
-     */
-    public Object getUid() {
-        return uid;
-    }
-
-    /**
-     *
-     * @param uid
-     */
-    public void setUid(Object uid) {
-        this.uid = uid;
-    }
-
 
     /**
      *
