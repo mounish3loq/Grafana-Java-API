@@ -1,26 +1,28 @@
 package org.grafana.api.octocharts;
 
-import org.grafana.api.GrafanaAPI;
-import org.grafana.api.responses.Dashboard.DashboardRsp;
-import org.grafana.api.responses.Dashboard.NewCreateUpdateDashboardRsp;
+import org.apache.spark.sql.Dataset;
+import org.apache.spark.sql.Row;
+import org.apache.spark.sql.SparkSession;
 import org.grafana.api.templates.Charts.PlotlyPanelChart;
-import org.grafana.api.templates.Dashboard.CreateUpdateDashboardTpl;
-import org.grafana.api.templates.Dashboard.DashboardTpl;
 
 public class OctoBarChart extends OctoBaseChart{
     private String uid;
     private String dashboardtitle;
+    private String tableName;
     public PlotlyPanelChart barpanel;
 
-    public OctoBarChart(String uid,String datasource,String xtitle,String ytitle,String paneltitle){
-        this.uid = uid;
+    public OctoBarChart(SparkSession spark,String dashboarduid, Dataset<Row> df, String workunitname, String summaryname, String xtitle, String ytitle, String paneltitle){
+        this.uid = dashboarduid;
         this.barpanel = new PlotlyPanelChart();
-        this.barpanel.setDatasource(datasource);
+        this.barpanel.setDatasource("PostgreSQL");
         this.barpanel.setPconfig(xtitle,ytitle,"bar");
         this.barpanel.setTitle(paneltitle);
+        this.tableName=workunitname+"_"+summaryname;
+        this.updateChartData(spark,df,dashboarduid,workunitname,summaryname);
     }
     public void setTrace(String xmapping,String ymapping){
         this.barpanel.setTraces(xmapping,ymapping);
+        this.barpanel.setTargets(String.format("select %s,%s from %s",xmapping,ymapping,this.tableName));
     }
     public void setTarget(String query){
         this.barpanel.setTargets(query);

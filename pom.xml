@@ -54,13 +54,15 @@
             <artifactId>spark-sql_2.12</artifactId>
             <version>2.4.5</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-mllib -->
+
+
+        <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
         <dependency>
-            <groupId>org.apache.spark</groupId>
-            <artifactId>spark-mllib_2.12</artifactId>
-            <version>2.4.5</version>
-            <scope>runtime</scope>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.12</version>
         </dependency>
+
 
 
         <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
