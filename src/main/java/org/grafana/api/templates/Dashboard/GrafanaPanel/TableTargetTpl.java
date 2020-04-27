@@ -2,13 +2,13 @@ package org.grafana.api.templates.Dashboard.GrafanaPanel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import org.json.JSONObject;
+import org.grafana.api.templates.Dashboard.PlotlyPanel.Targets.WhereTpl;
+import org.grafana.api.templates.Dashboard.abstractbasepanel.BaseTargetsTpl;
 
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TableTargetTpl{
+public class TableTargetTpl extends BaseTargetsTpl {
 
     public String getRefId() {
         return refId;
@@ -50,11 +50,11 @@ public class TableTargetTpl{
         this.group = group;
     }
 
-    public List<JSONObject> getWhere() {
+    public List<Object> getWhere() {
         return where;
     }
 
-    public void setWhere(List<JSONObject> where) {
+    public void setWhere(List<Object> where) {
         this.where = where;
     }
 
@@ -104,7 +104,7 @@ public class TableTargetTpl{
 
     @SerializedName("where")
     @Expose
-    private List<JSONObject> where;
+    private List<Object> where;
 
     @SerializedName("select")
     @Expose
@@ -126,13 +126,16 @@ public class TableTargetTpl{
         this.group = new String[]{};
         this.rawQuery = true;
 
-        JSONObject temp = new JSONObject();
-        String[] temp2 = new String[]{};
-        temp.put("type","macro");
-        temp.put("name","$__timeFilter");
-        temp.put("params",temp2);
-        this.where=  new ArrayList<>();
-        this.where.add(temp);
+//        JSONObject temp = new JSONObject();
+//        String[] temp2 = new String[]{};
+//        temp.put("type","macro");
+//        temp.put("name","$__timeFilter");
+//        temp.put("params",temp2);
+//        this.where=  new ArrayList<>();
+////        WhereTpl wtp = new WhereTpl();
+//        this.where.add(temp);
+        this.where = new ArrayList<>();
+        this.where.add(new WhereTpl());
         this.select = new ArrayList<>();
         this.select.add(new String[]{});
 

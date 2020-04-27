@@ -1,23 +1,55 @@
 package org.grafana.api.templates.Dashboard.GrafanaPanel;
 
+import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import org.json.JSONObject;
+import org.grafana.api.templates.Dashboard.GrafanaPanel.tablestyles.TableStylesTpl1;
+import org.grafana.api.templates.Dashboard.GrafanaPanel.tablestyles.TableStylesTpl2;
+import org.grafana.api.templates.Dashboard.abstractbasepanel.BaseTargetsTpl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TablePanelTpl extends GrafanaBasePanelTpl {
-    @SerializedName("targets")
+
+    @SerializedName("options")
     @Expose
-    private List<TableTargetTpl> targets = new ArrayList<>();
+    private String options;
 
-    public List<TableTargetTpl> getTargets() {
-        return targets;
-    }
+    @SerializedName("styles")
+    @Expose
+    private List<Object> styles;
 
-    public void setTargets(List<TableTargetTpl> targets) {
-        this.targets = targets;
+    @SerializedName("transform")
+    @Expose
+    private String transform;
+
+    @SerializedName("pageSize")
+    @Expose
+    private Integer pageSize;
+
+    @SerializedName("showHeader")
+    @Expose
+    private Boolean showHeader;
+
+    @SerializedName("fontSize")
+    @Expose
+    private String fontSize;
+
+    @SerializedName("columns")
+    @Expose
+    private String[] columns;
+
+    @SerializedName("sort")
+    @Expose
+    private TableSortTpl sort;
+
+    public void setTargets(String query) {
+        TableTargetTpl ttp = new TableTargetTpl();
+        ttp.setRawSql(query);
+        List<BaseTargetsTpl> tp =this.getTargets();
+        tp.add(ttp);
+        this.setTargets(tp);
     }
 
     public String getOptions() {
@@ -84,71 +116,13 @@ public class TablePanelTpl extends GrafanaBasePanelTpl {
         this.sort = sort;
     }
 
-    @SerializedName("options")
-    @Expose
-    private String options;
-
-    @SerializedName("styles")
-    @Expose
-    private List<Object> styles;
-
-    @SerializedName("transform")
-    @Expose
-    private String transform;
-
-    @SerializedName("pageSize")
-    @Expose
-    private Integer pageSize;
-
-    @SerializedName("showHeader")
-    @Expose
-    private Boolean showHeader;
-
-    @SerializedName("fontSize")
-    @Expose
-    private String fontSize;
-
-    @SerializedName("columns")
-    @Expose
-    private String[] columns;
-
-    @SerializedName("sort")
-    @Expose
-    private TableSortTpl sort;
-
-
-    public void setTargets(String query) {
-        TableTargetTpl ttp = new TableTargetTpl();
-        ttp.setRawSql(query);
-        List<TableTargetTpl> tp =this.getTargets();
-        tp.add(ttp);
-        this.setTargets(tp);
-    }
-
 
 
     public TablePanelTpl(){
         // The styles are standard. no need for separate Template.
-        styles = new ArrayList<>();
-        JSONObject temp = new JSONObject();
-        temp.put("type","date");
-        temp.put("pattern","Time");
-        temp.put("alias","Time");
-        temp.put("dateFormat","YYYY-MM-DD HH:mm:ss");
-        temp.put("align","auto");
-
-        String[] a = new String[]{};
-        JSONObject temp2 = new JSONObject();
-        temp2.put("unit","short");
-        temp2.put("type","number");
-        temp2.put("alias","");
-        temp2.put("decimals",2);
-        temp2.put("colors",a);
-        temp2.put("colorMode","");
-        temp2.put("pattern","/.*/");
-        temp2.put("thresholds",a);
-        temp2.put("align","right");
-
+        this.styles = new ArrayList<>();
+        this.styles.add(new TableStylesTpl1());
+        this.styles.add(new TableStylesTpl2());
         this.sort = new TableSortTpl();
         this.columns = new String[]{};
         this.options = null;

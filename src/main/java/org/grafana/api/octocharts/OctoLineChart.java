@@ -11,6 +11,7 @@ public class OctoLineChart extends OctoBaseChart {
     private String dashboarduid;
     private String dashboardtitle;
     private String tableName;
+    private String columns;
     public LineGraphPanelTpl lineGraph;
     public OctoLineChart(SparkSession spark, String dashboarduid, Dataset<Row> df, String workunitname, String summaryname, String paneltitle){
         this.dashboarduid = dashboarduid;
@@ -23,11 +24,14 @@ public class OctoLineChart extends OctoBaseChart {
         this.lineGraph.setLegend(lgl);
         this.tableName=workunitname+"_"+summaryname;
         this.updateChartData(spark,df,dashboarduid,workunitname,summaryname);
-        String query = "SELECT\n  year_month AS \"time\",\n  varejo AS \"Varejo\",\n  vestuario AS \"Vestuario\",\n  \"serviÇo\" AS \"Serviço\",\n  supermercados AS \"Supermercados\",\n  restaurante AS \"Restaurante\",\n  \"posto_de_gas\" AS \"Posto De Gas\"\nFROM " + this.tableName+" \nWHERE\n  $__timeFilter(year_month)\nORDER BY 1";
-        this.lineGraph.setTargets(query,this.tableName,"time_series");
-        this.updateChartData(spark,df,dashboarduid,workunitname,summaryname);
+    }
+
+    public void setColumns(String cols){
+        this.columns = cols;
     }
     public void publish(){
+        String query = String.format("SELECT\n  year_month AS \"time\", %s FROM %s \nWHERE\n  $__timeFilter(year_month)\nORDER BY 1",this.columns,this.tableName);
+        this.lineGraph.setTargets(query,this.tableName,"time_series");
         publish(this.dashboarduid,null,this.lineGraph);
     }
 }

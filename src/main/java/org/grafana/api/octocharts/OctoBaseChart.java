@@ -1,4 +1,5 @@
 package org.grafana.api.octocharts;
+import com.google.gson.GsonBuilder;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.functions;
@@ -7,10 +8,12 @@ import org.grafana.api.responses.Dashboard.DashboardRsp;
 import org.grafana.api.responses.Dashboard.NewCreateUpdateDashboardRsp;
 import org.grafana.api.templates.Dashboard.CreateUpdateDashboardTpl;
 import org.grafana.api.templates.Dashboard.DashboardTpl;
-import org.grafana.api.templates.Dashboard.GrafanaPanel.LineGraphPanelTpl;
-import org.grafana.api.templates.Dashboard.PlotlyPanel.PlotlyPanelTpl;
 import org.apache.spark.sql.Dataset;
+import org.grafana.api.templates.Dashboard.abstractbasepanel.BasepanelTpl;
+import com.google.gson.Gson;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Properties;
 
 public abstract class OctoBaseChart {
@@ -26,7 +29,7 @@ public abstract class OctoBaseChart {
                 .mode("append")
                 .jdbc("jdbc:postgresql://localhost:5432/SampleDatabase", tableName, connectionProperties);
     }
-    public void publish(String uid, String dashboardtitle, PlotlyPanelTpl panel){
+    public void publish(String uid, String dashboardtitle, BasepanelTpl panel){
         String grafanaserver = "http://localhost:3000";
         String mainOrgApiKey = "Bearer eyJrIjoiSmtSNUY2R3RyV0hVQ0oxQ0E5NlJlZ0lXYVp4Z0s0T1QiLCJuIjoiVGVzdCBLZXkiLCJpZCI6MX0= ";
         GrafanaAPI grafanaAPI = new GrafanaAPI(grafanaserver);
@@ -42,28 +45,15 @@ public abstract class OctoBaseChart {
             }
         }else{
             dashItems = dashboardRsp.getDashboard();
-        }
-        CreateUpdateDashboardTpl dashTest = new CreateUpdateDashboardTpl();
-        dashItems.setPanels(panel);
-        dashTest.setDashboard(dashItems);
-        NewCreateUpdateDashboardRsp createUpdateDashboard = grafanaAPI.orgAdminAPI(mainOrgApiKey).createUpdateDashboard(dashTest);
-    }
-    public void publish(String uid, String dashboardtitle, LineGraphPanelTpl panel){
-        String grafanaserver = "http://localhost:3000";
-        String mainOrgApiKey = "Bearer eyJrIjoiSmtSNUY2R3RyV0hVQ0oxQ0E5NlJlZ0lXYVp4Z0s0T1QiLCJuIjoiVGVzdCBLZXkiLCJpZCI6MX0= ";
-        GrafanaAPI grafanaAPI = new GrafanaAPI(grafanaserver);
-        DashboardTpl dashItems;
-        DashboardRsp dashboardRsp = grafanaAPI.orgAdminAPI(mainOrgApiKey).getDashboardByUid(uid);
-        if (dashboardRsp == null){
-            dashItems = new DashboardTpl();
-            dashItems.setUid(uid);
-            if (dashboardtitle == null) {
-                dashItems.setTitle("MyTestTitle2");
-            }else{
-                dashItems.setTitle(dashboardtitle);
+            System.out.println("dashboard not null");
+            try{
+                FileWriter fw = new FileWriter("dashtest.json");
+                Gson gson = new GsonBuilder().create();
+                fw.write(gson.toJson(dashItems));
+                fw.close();
+            }catch (IOException ie){
+                System.out.println("File error");
             }
-        }else{
-            dashItems = dashboardRsp.getDashboard();
         }
         CreateUpdateDashboardTpl dashTest = new CreateUpdateDashboardTpl();
         dashItems.setPanels(panel);
