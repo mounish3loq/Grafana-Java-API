@@ -3,11 +3,13 @@ package org.grafana.api.templates.Dashboard.GrafanaPanel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import org.grafana.api.templates.Dashboard.PlotlyPanel.PlotlyGridPosTpl;
+import org.grafana.api.templates.Dashboard.abstractbasepanel.BaseTargetsTpl;
+import org.grafana.api.templates.Dashboard.abstractbasepanel.BasepanelTpl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GrafanaBasePanelTpl {
+public class GrafanaBasePanelTpl extends BasepanelTpl {
 
     @SerializedName("datasource")
     @Expose
@@ -23,7 +25,7 @@ public class GrafanaBasePanelTpl {
 
     @SerializedName("targets")
     @Expose
-    private List<LineGraphTargetsTpl> targets = new ArrayList<>();
+    private List<BaseTargetsTpl> targets = new ArrayList<>();
 
     @SerializedName("timefrom")
     @Expose
@@ -66,11 +68,11 @@ public class GrafanaBasePanelTpl {
     }
 
 
-    public List<LineGraphTargetsTpl> getTargets() {
+    public List<BaseTargetsTpl> getTargets() {
         return targets;
     }
 
-    public void setTargets(List<LineGraphTargetsTpl> targets) {
+    public void setTargets(List<BaseTargetsTpl> targets) {
         this.targets = targets;
     }
 

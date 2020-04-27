@@ -5,6 +5,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import org.grafana.api.templates.Dashboard.GrafanaPanel.GrafanaBasePanelTpl;
 import org.grafana.api.templates.Dashboard.PlotlyPanel.PlotlyPanelTpl;
+import org.grafana.api.templates.Dashboard.abstractbasepanel.BasepanelTpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,7 @@ public class DashboardTpl {
     private List<Object> links = new ArrayList<>();
     @SerializedName("panels")
     @Expose
-    private List<Object> panels = new ArrayList<>();
+    private List<BasepanelTpl> panels = new ArrayList<>();
     @SerializedName("refresh")
     @Expose
     private Boolean refresh;
@@ -186,7 +187,7 @@ public class DashboardTpl {
      *
      * @return
      */
-    public List<Object> getPanels() {
+    public List<BasepanelTpl> getPanels() {
         return panels;
     }
 
@@ -194,13 +195,12 @@ public class DashboardTpl {
      *
      * @param panels
      */
-    public void setPanels(List<Object> panels) {
+    public void setPanels(List<BasepanelTpl> panels) {
         this.panels = panels;
     }
-    public void setPanels(PlotlyPanelTpl panel) {
+    public void setPanels(BasepanelTpl panel) {
         this.panels.add(panel);
     }
-    public void setPanels(GrafanaBasePanelTpl panel){this.panels.add(panel);}
 
     /**
      *
