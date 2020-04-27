@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public  class LineGraphLegendTpl{
+  
     @SerializedName("avg")
     @Expose
     private boolean avg;
@@ -37,7 +38,7 @@ public  class LineGraphLegendTpl{
         this.current= false;
         this.max =false;
         this.min= false;
-        this.show= false;
+        this.show= true;
         this.total = false;
         this.values = false;
     }
