@@ -15,6 +15,7 @@ public class OctoTableChart extends OctoBaseChart {
 
     public OctoTableChart(SparkSession spark, String dashboarduid, Dataset<Row> df, String workunitname, String summaryname, String paneltitle){
         this.dashboarduid = dashboarduid;
+        this.dashboardtitle = null;
         this.tablepanel = new TablePanelTpl();
         this.tablepanel.setDatasource(System.getenv("POSTGRES_DATASOURCE"));
         this.tablepanel.setTitle(paneltitle);
@@ -28,7 +29,7 @@ public class OctoTableChart extends OctoBaseChart {
     public void publish(){
         String query = String.format("SELECT\n %s FROM %s where dashboardid = \'%s\'",this.columns,this.tableName,this.dashboarduid);
         this.tablepanel.setTargets(query);
-        publish(this.dashboarduid,null,this.tablepanel);
+        publish(this.dashboarduid,this.dashboardtitle,this.tablepanel);
     }
     public void setDashboardtitle(String dashboardtitle){
         this.dashboardtitle = dashboardtitle;
