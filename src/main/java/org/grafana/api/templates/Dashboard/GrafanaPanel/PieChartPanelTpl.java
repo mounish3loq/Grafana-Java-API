@@ -2,13 +2,17 @@ package org.grafana.api.templates.Dashboard.GrafanaPanel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import org.grafana.api.octocharts.OctoHeatmapChart;
 import org.grafana.api.templates.Dashboard.PlotlyPanel.PlotlyPanelTpl;
 import org.grafana.api.templates.Dashboard.PlotlyPanel.PlotlyTargetsTpl;
 
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class PieChartPanelTpl extends PlotlyPanelTpl {
+    static Logger log = Logger.getLogger(PieChartPanelTpl.class.getName());
+
     @SerializedName("pieType")
     @Expose
     private String pieType;
@@ -76,6 +80,7 @@ public class PieChartPanelTpl extends PlotlyPanelTpl {
         this.pluginVersion ="6.6.2";
         this.strokeWidth = "0";
         this.valueName = "current";
+        log.info("PieChartPanelTpl Done");
     }
 
     public void setTargets(String query,String format){

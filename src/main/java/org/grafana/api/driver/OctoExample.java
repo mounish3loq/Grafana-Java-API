@@ -4,6 +4,7 @@ import ca.krasnay.sqlbuilder.SelectBuilder;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
+import org.grafana.api.RequestBuilder;
 import org.grafana.api.octocharts.OctoBarChart;
 import org.grafana.api.octocharts.OctoHeatmapChart;
 import org.grafana.api.octocharts.OctoLineChart;
@@ -33,6 +34,7 @@ public class OctoExample {
         OctoLineChart octoLineChart = new OctoLineChart(spark,"ABCDE",df2,"Lineworkunit","LineSummary","Line chart");
         octoLineChart.setTimeColumn("year_month");
         octoLineChart.setColumns("varejo AS \"Varejo\",vestuario AS \"Vestuario\",\"serviÇo\" AS \"Serviço\",supermercados AS \"Supermercados\",restaurante AS \"Restaurante\", \"posto_de_gas\" AS \"Posto De Gas\"");
+        octoLineChart.setTimeColumn("year_month");
         octoLineChart.publish();
 
         OctoBarChart octoBarChart = new OctoBarChart(spark,"ABCDE",df,"Sampleworkunit","SampleSummary","xdata","ydata","Bar chart");
@@ -50,5 +52,6 @@ public class OctoExample {
         octoTableChart.publish();
 
         spark.stop();
+
     }
 }

@@ -2,8 +2,12 @@ package org.grafana.api.templates.Dashboard.GrafanaPanel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import org.grafana.api.octocharts.OctoHeatmapChart;
+
+import java.util.logging.Logger;
 
 public class TableSortTpl {
+    static Logger log = Logger.getLogger(TableSortTpl.class.getName());
 
     public Integer getCol() {
         return col;
@@ -32,5 +36,6 @@ public class TableSortTpl {
     public TableSortTpl(){
         this.col= 0;
         this.desc = true;
+        log.info("TableSortTpl Done");
     }
 }

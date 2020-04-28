@@ -2,8 +2,13 @@ package org.grafana.api.templates.Dashboard.GrafanaPanel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import org.grafana.api.octocharts.OctoHeatmapChart;
+
+import java.util.logging.Logger;
 
 public class LineGraphTooltipTpl{
+    static Logger log = Logger.getLogger(LineGraphTooltipTpl.class.getName());
+
     @SerializedName("shared")
     @Expose
     private boolean shared;
@@ -20,6 +25,7 @@ public class LineGraphTooltipTpl{
         this.shared = false;
         this.sort = 0;
         this.value_type = "individual";
+        log.info("LineGraphToolTip Done");
     }
 
 }
