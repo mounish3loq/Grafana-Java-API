@@ -14,6 +14,7 @@ public class OctoPieChart extends OctoBaseChart {
 
     public OctoPieChart(SparkSession spark, String dashboarduid, Dataset<Row> df, String workunitname, String summaryname, String paneltitle){
         this.dashboarduid = dashboarduid;
+        this.piepanel = new PieChartPanelTpl();
         this.piepanel.setDatasource("PostgreSQL");
         this.piepanel.setTitle(paneltitle);
         this.piepanel.setPieType("pie");
@@ -28,8 +29,11 @@ public class OctoPieChart extends OctoBaseChart {
     }
 
     public void publish(){
-        String query = String.format("SELECT\n now() as time, %s FROM %s",this.columns,this.tableName);
+        String query = String.format("SELECT\n now() as time, %s FROM %s where dashboardid = \'%s\'",this.columns,this.tableName,this.dashboarduid);
         this.piepanel.setTargets(query,"time_series");
         publish(this.dashboarduid,this.dashboardtitle,this.piepanel);
+    }
+    public void setDashboardtitle(String dashboardtitle){
+        this.dashboardtitle = dashboardtitle;
     }
 }

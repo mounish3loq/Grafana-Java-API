@@ -24,17 +24,18 @@ public abstract class OctoBaseChart {
     private String postgres_db = System.getenv("POSTGRES_DB");
     public void updateChartData(SparkSession spark,Dataset<Row> df,String dashboarduid,String workunitname,String summaryname){
         log.info("UpdateChartData "+" Spark Session Id: " + spark +" Table Name: " + workunitname+"_"+summaryname);
+        log.info(" "+ System.getenv("POSTGRES_USERNAME")+" "+System.getenv("POSTGRES_PASSWORD")+" "+System.getenv("POSTGRES_URL"));
 
         String tableName = workunitname +"_"+ summaryname;
         Properties connectionProperties = new Properties();
-        connectionProperties.put("user", this.postgre_user);
-        connectionProperties.put("password", this.postgre_password);
+        connectionProperties.put("user", System.getenv("POSTGRES_USERNAME"));
+        connectionProperties.put("password", System.getenv("POSTGRES_PASSWORD"));
         df = df.withColumn("dashboardid",functions.lit(dashboarduid));
         df = df.withColumn("workunitname", functions.lit(workunitname));
         df = df.withColumn("summaryname",functions.lit(summaryname));
         df.write()
                 .mode("append")
-                .jdbc("jdbc:postgresql://"+this.postgres_url+"/"+this.postgres_db, tableName, connectionProperties);
+                .jdbc("jdbc:postgresql://"+System.getenv("POSTGRES_URL")+"/"+System.getenv("POSTGRES_DB"), tableName, connectionProperties);
     }
   
     public void publish(String uid, String dashboardtitle, BasePanelTpl panel){

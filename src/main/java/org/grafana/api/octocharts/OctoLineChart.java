@@ -18,11 +18,11 @@ public class OctoLineChart extends OctoBaseChart {
     private String columns;
     private String timecolumn;
     public LineGraphPanelTpl lineGraph;
-    private String timeColumn;
 
     public OctoLineChart(SparkSession spark, String dashboarduid, Dataset<Row> df, String workunitname, String summaryname, String paneltitle){
         log.info("OctoLineChart Spark Session : "+spark + " Dashboard UID: "+dashboarduid+ " Table Name : "+workunitname+"_"+summaryname+"Panel Title : "+paneltitle);
         this.dashboarduid = dashboarduid;
+        this.dashboardtitle = null;
         this.lineGraph = new LineGraphPanelTpl();
         this.lineGraph.setDatasource("PostgreSQL");
         this.lineGraph.setTitle(paneltitle);
@@ -40,12 +40,15 @@ public class OctoLineChart extends OctoBaseChart {
         this.timecolumn = col;
     }
     public void publish(){
-        String query = String.format("SELECT\n  %s AS \"time\", %s FROM %s \nWHERE\n  $__timeFilter(%s)\nORDER BY 1",this.timecolumn,this.columns,this.tableName,this.timecolumn);
+        String query = String.format("SELECT\n  %s AS \"time\", %s FROM %s \nWHERE\n dashboardid = \'%s\' and $__timeFilter(%s)\nORDER BY 1",this.timecolumn,this.columns,this.tableName,this.dashboarduid,this.timecolumn);
         this.lineGraph.setTargets(query,this.tableName,"time_series");
         try {
-            publish(this.dashboarduid, null, this.lineGraph);
+            publish(this.dashboarduid, this.dashboardtitle, this.lineGraph);
         }catch (Exception e){
             log.log(Level.SEVERE,"OctoLine Chart Publish Exception "+e.toString());
         }
+    }
+    public void setDashboardtitle(String dashboardtitle){
+        this.dashboardtitle = dashboardtitle;
     }
 }

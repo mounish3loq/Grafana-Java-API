@@ -26,7 +26,7 @@ public class OctoTableChart extends OctoBaseChart {
         this.columns = cols;
     }
     public void publish(){
-        String query = String.format("SELECT\n %s FROM %s",this.columns,this.tableName);
+        String query = String.format("SELECT\n %s FROM %s where dashboardid = \'%s\'",this.columns,this.tableName,this.dashboarduid);
         this.tablepanel.setTargets(query);
         publish(this.dashboarduid,null,this.tablepanel);
     }

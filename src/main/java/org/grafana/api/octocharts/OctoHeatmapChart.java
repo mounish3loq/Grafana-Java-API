@@ -25,6 +25,7 @@ public class OctoHeatmapChart extends OctoBaseChart{
   
     public OctoHeatmapChart(SparkSession spark, String dashboarduid, Dataset<Row> df, String workunitname, String summaryname, String xtitle, String ytitle, String paneltitle){
         this.uid = dashboarduid;
+        this.dashboardtitle = null;
         this.heatmapPanel = new PlotlyHeatmapPanelChart();
         this.heatmapPanel.setDatasource("PostgreSQL");
         this.heatmapPanel.setPconfig(xtitle,ytitle);
@@ -37,11 +38,11 @@ public class OctoHeatmapChart extends OctoBaseChart{
         log.info(s);
         this.heatmapPanel.setTraces(xmapping,ymapping,zmapping);
     }
-    public void setTarget(String query){
+    public void setTarget(String column){
         try{
-        this.heatmapPanel.setTargets(query);
-    }catch (Exception e){
-         log.log(Level.SEVERE,"HeatMap Set Target Exception "+e.toString());
+            this.heatmapPanel.setTargets(String.format("select %s from %s where dashboardid = \'%s\'",column,this.tableName,this.uid));
+        }catch (Exception e){
+            log.log(Level.SEVERE,"HeatMap Set Target Exception "+e.toString());
         }
     }
     public void setDashboardtitle(String dashboardtitle){
@@ -50,7 +51,7 @@ public class OctoHeatmapChart extends OctoBaseChart{
 
     public void publish(){
         try {
-            publish(this.uid,null,this.heatmapPanel);
+            publish(this.uid,this.dashboardtitle,this.heatmapPanel);
         }catch (Exception e){
             log.log(Level.SEVERE,"HeatMap Publish Exception "+e.toString());
         }
