@@ -15,7 +15,7 @@ public class OctoPieChart extends OctoBaseChart {
     public OctoPieChart(SparkSession spark, String dashboarduid, Dataset<Row> df, String workunitname, String summaryname, String paneltitle){
         this.dashboarduid = dashboarduid;
         this.piepanel = new PieChartPanelTpl();
-        this.piepanel.setDatasource("PostgreSQL");
+        this.piepanel.setDatasource(System.getenv("POSTGRES_DATASOURCE"));
         this.piepanel.setTitle(paneltitle);
         this.piepanel.setPieType("pie");
         this.updateChartData(spark,df,dashboarduid,workunitname,summaryname);

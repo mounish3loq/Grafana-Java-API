@@ -24,7 +24,7 @@ public class OctoLineChart extends OctoBaseChart {
         this.dashboarduid = dashboarduid;
         this.dashboardtitle = null;
         this.lineGraph = new LineGraphPanelTpl();
-        this.lineGraph.setDatasource("PostgreSQL");
+        this.lineGraph.setDatasource(System.getenv("POSTGRES_DATASOURCE"));
         this.lineGraph.setTitle(paneltitle);
         this.lineGraph.setType("graph");
         LineGraphLegendTpl lgl = new LineGraphLegendTpl();
