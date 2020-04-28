@@ -201,10 +201,6 @@ public class DashboardTpl {
         this.panels = panels;
     }
     public void setPanels(BasePanelTpl panel) {
-        System.out.println("used basepanel");
-        this.panels.add(panel);
-    }
-    public void setPanels(GrafanaBasePanelTpl panel){
         this.panels.add(panel);
     }
 

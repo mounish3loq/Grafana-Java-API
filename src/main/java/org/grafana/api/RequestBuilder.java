@@ -68,7 +68,6 @@ public class RequestBuilder {
     public <T> T setServerRequest(RequestParam requestParam, String replacement, Class<T> classOfT){
         try{
             String urlpath = requestParam.getURL().replace(requestParam.getParameter(), replacement).replace(" ", "%20");
-            System.out.println(urlpath);
             JsonElement createServerRequest = grafanaAPI.getServerConnection().createServerRequest(
                     requestParam.getURL().replace(requestParam.getParameter(), replacement).replace(" ", "%20"),
                     requestParam.getMethode(),

@@ -16,15 +16,8 @@ import java.util.logging.Logger;
 
 public abstract class OctoBaseChart {
     static Logger log = Logger.getLogger(OctoBaseChart.class.getName());
-    private String grafanaserver = System.getenv("GRAFANA_SERVER");
-    private String mainOrgApiKey = System.getenv("GRAFANA_APIKEY");
-    private String postgre_user = System.getenv("POSTGRES_USERNAME");
-    private String postgre_password = System.getenv("POSTGRES_PASSWORD");
-    private String postgres_url = System.getenv("POSTGRES_URL");
-    private String postgres_db = System.getenv("POSTGRES_DB");
     public void updateChartData(SparkSession spark,Dataset<Row> df,String dashboarduid,String workunitname,String summaryname){
         log.info("UpdateChartData "+" Spark Session Id: " + spark +" Table Name: " + workunitname+"_"+summaryname);
-        log.info(" "+ System.getenv("POSTGRES_USERNAME")+" "+System.getenv("POSTGRES_PASSWORD")+" "+System.getenv("POSTGRES_URL"));
 
         String tableName = workunitname +"_"+ summaryname;
         Properties connectionProperties = new Properties();
@@ -41,9 +34,9 @@ public abstract class OctoBaseChart {
     public void publish(String uid, String dashboardtitle, BasePanelTpl panel){
         log.info("Method Name : BasePanelTpl Publish"+"Uid : "+uid + "Dashboard Title : "+dashboardtitle);
 
-        String grafanaserver = this.grafanaserver;
+        String grafanaserver = System.getenv("GRAFANA_SERVER");
 //        "Bearer eyJrIjoiSmtSNUY2R3RyV0hVQ0oxQ0E5NlJlZ0lXYVp4Z0s0T1QiLCJuIjoiVGVzdCBLZXkiLCJpZCI6MX0= "
-        String mainOrgApiKey = this.mainOrgApiKey;
+        String mainOrgApiKey = System.getenv("GRAFANA_APIKEY");
         GrafanaAPI grafanaAPI = new GrafanaAPI(grafanaserver);
         DashboardTpl dashItems;
         DashboardRsp dashboardRsp = grafanaAPI.orgAdminAPI(mainOrgApiKey).getDashboardByUid(uid);
@@ -57,7 +50,6 @@ public abstract class OctoBaseChart {
             }
         }else{
             dashItems = dashboardRsp.getDashboard();
-            System.out.println("dashboard not null");
         }
         CreateUpdateDashboardTpl dashTest = new CreateUpdateDashboardTpl();
         dashItems.setPanels(panel);
