@@ -21,15 +21,15 @@ public class OctoExample {
                 .config("spark.some.config.option", "some-value")
                 .getOrCreate();
         Properties connectionProperties = new Properties();
-        connectionProperties.put("user", "postgres");
-        connectionProperties.put("password", "12345");
+        connectionProperties.put("user", System.getenv("POSTGRES_USERNAME"));
+        connectionProperties.put("password", System.getenv("POSTGRES_PASSWORD"));
         Dataset<Row> df =spark.read()
-                .jdbc("jdbc:postgresql://localhost:5432/SampleDatabase", "table1", connectionProperties);
+                .jdbc("jdbc:postgresql://"+System.getenv("POSTGRES_URL")+"/"+System.getenv("POSTGRES_DB"), "table1", connectionProperties);
         Dataset<Row> df2 =spark.read()
-                .jdbc("jdbc:postgresql://localhost:5432/SampleDatabase", "mytable", connectionProperties);
+                .jdbc("jdbc:postgresql://"+System.getenv("POSTGRES_URL")+"/"+System.getenv("POSTGRES_DB"), "mytable", connectionProperties);
 
         Dataset<Row> df3 =spark.read()
-                .jdbc("jdbc:postgresql://localhost:5432/SampleDatabase", "sample_heatmap_table", connectionProperties);
+                .jdbc("jdbc:postgresql://"+System.getenv("POSTGRES_URL")+"/"+System.getenv("POSTGRES_DB"), "sample_heatmap_table", connectionProperties);
 
         OctoLineChart octoLineChart = new OctoLineChart(spark,"ABCDE",df2,"Lineworkunit","LineSummary","Line chart");
         octoLineChart.setTimeColumn("year_month");
