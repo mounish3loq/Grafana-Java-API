@@ -45,6 +45,7 @@ public class OctoBarChart extends OctoBaseChart{
 
 
     public void setDashboardtitle(String dashboardtitle){
+        this.dashboardTitle = dashboardtitle;
         log.info("Set Dashboard Title: "+ dashboardtitle);this.dashboardTitle = dashboardtitle;
     }
     public void publish(){
