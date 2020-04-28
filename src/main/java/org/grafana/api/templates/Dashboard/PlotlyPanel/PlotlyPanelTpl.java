@@ -2,11 +2,12 @@ package org.grafana.api.templates.Dashboard.PlotlyPanel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import org.grafana.api.templates.Dashboard.abstractbasepanel.BasepanelTpl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlotlyPanelTpl {
+public class PlotlyPanelTpl extends BasepanelTpl {
     @SerializedName("datasource")
     @Expose
     private String datasource;

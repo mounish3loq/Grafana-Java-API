@@ -4,11 +4,12 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import org.grafana.api.templates.Dashboard.PlotlyPanel.Targets.ParamsTpl;
 import org.grafana.api.templates.Dashboard.PlotlyPanel.Targets.WhereTpl;
+import org.grafana.api.templates.Dashboard.abstractbasepanel.BaseTargetsTpl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlotlyTargetsTpl {
+public class PlotlyTargetsTpl extends BaseTargetsTpl {
 
     @SerializedName("format")
     @Expose

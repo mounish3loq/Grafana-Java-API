@@ -3,6 +3,7 @@ package org.grafana.api.templates.Dashboard.GrafanaPanel;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import org.grafana.api.templates.Dashboard.abstractbasepanel.BaseTargetsTpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -221,7 +222,7 @@ public class LineGraphPanelTpl extends GrafanaBasePanelTpl {
     public void setTargets(String query,String table,String format){
         //Creating a target object which takes in an sql query
         LineGraphTargetsTpl targetsTpl = new LineGraphTargetsTpl(query,table,format);
-        List<LineGraphTargetsTpl> listofTargets= this.getTargets();
+        List<BaseTargetsTpl> listofTargets= this.getTargets();
         listofTargets.add(targetsTpl);
         this.setTargets(listofTargets);
     }
