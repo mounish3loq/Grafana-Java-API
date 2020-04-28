@@ -33,11 +33,6 @@ public class OctoLineChart extends OctoBaseChart {
         this.tableName=workunitname+"_"+summaryname;
         this.updateChartData(spark,df,dashboarduid,workunitname,summaryname);
     }
-
-
-    public void setTimeColumn(String timeColumn) {
-        this.timeColumn = timeColumn;
-    }
     public void setColumns(String cols){
         this.columns = cols;
     }

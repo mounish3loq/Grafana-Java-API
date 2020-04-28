@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 
-public class GrafanaBasePanelTpl extends BasepanelTpl {
+public class GrafanaBasePanelTpl extends BasePanelTpl {
     static Logger log = Logger.getLogger(GrafanaBasePanelTpl.class.getName());
 
     @SerializedName("datasource")

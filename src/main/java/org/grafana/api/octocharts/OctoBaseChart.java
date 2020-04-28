@@ -37,7 +37,7 @@ public abstract class OctoBaseChart {
                 .jdbc("jdbc:postgresql://"+this.postgres_url+"/"+this.postgres_db, tableName, connectionProperties);
     }
   
-    public void publish(String uid, String dashboardtitle, BasepanelTpl panel){
+    public void publish(String uid, String dashboardtitle, BasePanelTpl panel){
         log.info("Method Name : BasePanelTpl Publish"+"Uid : "+uid + "Dashboard Title : "+dashboardtitle);
 
         String grafanaserver = this.grafanaserver;

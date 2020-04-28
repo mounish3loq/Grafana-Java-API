@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>GrafanaAPI8</artifactId>
+    <artifactId>GrafanaAPI-Java-API</artifactId>
     <version>1.0-SNAPSHOT</version>
     <build>
         <plugins>
@@ -79,11 +79,6 @@
             <version>1.3</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.json/json -->
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20190722</version>
-        </dependency>
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
