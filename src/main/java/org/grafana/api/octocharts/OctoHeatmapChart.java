@@ -1,5 +1,10 @@
 package org.grafana.api.octocharts;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import org.apache.spark.sql.Dataset;
+import org.apache.spark.sql.Row;
+import org.apache.spark.sql.SparkSession;
 import org.grafana.api.GrafanaAPI;
 import org.grafana.api.responses.Dashboard.DashboardRsp;
 import org.grafana.api.responses.Dashboard.NewCreateUpdateDashboardRsp;
@@ -15,15 +20,17 @@ public class OctoHeatmapChart extends OctoBaseChart{
     static Logger log = Logger.getLogger(OctoHeatmapChart.class.getName());
     private String uid;
     private String dashboardtitle;
+    private String tableName;
     public PlotlyHeatmapPanelChart heatmapPanel;
-
-    public OctoHeatmapChart(String uid,String datasource,String xtitle,String ytitle,String paneltitle){
-        log.info("Data Source: "+datasource+" X Title :"+xtitle +" Y Title : "+ytitle +" Panel Title : "+paneltitle);
-        this.uid = uid;
+  
+    public OctoHeatmapChart(SparkSession spark, String dashboarduid, Dataset<Row> df, String workunitname, String summaryname, String xtitle, String ytitle, String paneltitle){
+        this.uid = dashboarduid;
         this.heatmapPanel = new PlotlyHeatmapPanelChart();
-        this.heatmapPanel.setDatasource(datasource);
+        this.heatmapPanel.setDatasource("PostgreSQL");
         this.heatmapPanel.setPconfig(xtitle,ytitle);
         this.heatmapPanel.setTitle(paneltitle);
+        this.tableName=workunitname+"_"+summaryname;
+        this.updateChartData(spark,df,dashboarduid,workunitname,summaryname);
     }
     public void setTrace(String xmapping,String ymapping,String zmapping){
         String s = String.format("SetTrace X Mappings %s Y Mappings %s Z Mappings %s",xmapping,ymapping,zmapping);

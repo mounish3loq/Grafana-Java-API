@@ -9,6 +9,7 @@ import org.grafana.api.templates.Dashboard.CreateUpdateDashboardTpl;
 import org.grafana.api.templates.Dashboard.DashboardTpl;
 
 public class Example6 {
+    /*
     public static void main(String[] args){
         //Gson gson = new GsonBuilder().create();
         //Gson gsonPretty = new GsonBuilder().setPrettyPrinting().create();
@@ -51,7 +52,7 @@ public class Example6 {
         dashTest.setDashboard(dashItems);
         dashTest.setOverwrite(true);
 
-        /* Store generated dashboard json data
+        //Store generated dashboard json data
         try{
             FileWriter fw = new FileWriter("dashtest.json");
             fw.write(gson.toJson(dashTest));
@@ -59,8 +60,6 @@ public class Example6 {
         }catch (IOException ie){
             System.out.println("File error");
         }
-        */
-
         //Calling dashboard creation API endpoint.
         NewCreateUpdateDashboardRsp createUpdateDashboard = grafanaAPI.orgAdminAPI(mainOrgApiKey).createUpdateDashboard(dashTest);
         //System.out.println("Response msg : " + createUpdateDashboard.getStatus());
@@ -68,4 +67,6 @@ public class Example6 {
         //System.out.println("Uid across grafana servers" + createUpdateDashboard.getUid());
         //System.out.println("id unique within a server" + createUpdateDashboard.getId());
     }
+
+     */
 }

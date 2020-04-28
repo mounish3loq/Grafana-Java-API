@@ -1,5 +1,4 @@
 package org.grafana.api.octocharts;
-import com.google.gson.GsonBuilder;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.functions;
@@ -9,11 +8,8 @@ import org.grafana.api.responses.Dashboard.NewCreateUpdateDashboardRsp;
 import org.grafana.api.templates.Dashboard.CreateUpdateDashboardTpl;
 import org.grafana.api.templates.Dashboard.DashboardTpl;
 import org.apache.spark.sql.Dataset;
-import org.grafana.api.templates.Dashboard.abstractbasepanel.BasepanelTpl;
-import com.google.gson.Gson;
+import org.grafana.api.templates.Dashboard.abstractbasepanel.BasePanelTpl;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,6 +36,7 @@ public abstract class OctoBaseChart {
                 .mode("append")
                 .jdbc("jdbc:postgresql://"+this.postgres_url+"/"+this.postgres_db, tableName, connectionProperties);
     }
+  
     public void publish(String uid, String dashboardtitle, BasepanelTpl panel){
         log.info("Method Name : BasePanelTpl Publish"+"Uid : "+uid + "Dashboard Title : "+dashboardtitle);
 
@@ -60,15 +57,6 @@ public abstract class OctoBaseChart {
         }else{
             dashItems = dashboardRsp.getDashboard();
             System.out.println("dashboard not null");
-            try{
-                FileWriter fw = new FileWriter("dashtest.json");
-                Gson gson = new GsonBuilder().create();
-                fw.write(gson.toJson(dashItems));
-                fw.close();
-            }catch (IOException ie){
-                System.out.println("File error");
-                log.log(Level.SEVERE,"File Not Found");
-            }
         }
         CreateUpdateDashboardTpl dashTest = new CreateUpdateDashboardTpl();
         dashItems.setPanels(panel);

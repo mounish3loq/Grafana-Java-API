@@ -5,11 +5,12 @@ import com.google.gson.annotations.SerializedName;
 import org.grafana.api.octocharts.OctoBarChart;
 import org.grafana.api.templates.Dashboard.PlotlyPanel.PlotlyGridPosTpl;
 import org.grafana.api.templates.Dashboard.abstractbasepanel.BaseTargetsTpl;
-import org.grafana.api.templates.Dashboard.abstractbasepanel.BasepanelTpl;
+import org.grafana.api.templates.Dashboard.abstractbasepanel.BasePanelTpl;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+
 
 public class GrafanaBasePanelTpl extends BasepanelTpl {
     static Logger log = Logger.getLogger(GrafanaBasePanelTpl.class.getName());

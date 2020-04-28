@@ -16,6 +16,7 @@ public class OctoLineChart extends OctoBaseChart {
     private String dashboardtitle;
     private String tableName;
     private String columns;
+    private String timecolumn;
     public LineGraphPanelTpl lineGraph;
     private String timeColumn;
 
@@ -40,8 +41,11 @@ public class OctoLineChart extends OctoBaseChart {
     public void setColumns(String cols){
         this.columns = cols;
     }
+    public void setTimeColumn(String col){
+        this.timecolumn = col;
+    }
     public void publish(){
-        String query = String.format("SELECT\n  %s AS \"time\", %s FROM %s \nWHERE\n  $__timeFilter(year_month)\nORDER BY 1",this.timeColumn,this.columns,this.tableName);
+        String query = String.format("SELECT\n  %s AS \"time\", %s FROM %s \nWHERE\n  $__timeFilter(%s)\nORDER BY 1",this.timecolumn,this.columns,this.tableName,this.timecolumn);
         this.lineGraph.setTargets(query,this.tableName,"time_series");
         try {
             publish(this.dashboarduid, null, this.lineGraph);
