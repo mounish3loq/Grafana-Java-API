@@ -4,12 +4,12 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import org.grafana.api.templates.Dashboard.PlotlyPanel.PlotlyGridPosTpl;
 import org.grafana.api.templates.Dashboard.abstractbasepanel.BaseTargetsTpl;
-import org.grafana.api.templates.Dashboard.abstractbasepanel.BasepanelTpl;
+import org.grafana.api.templates.Dashboard.abstractbasepanel.BasePanelTpl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GrafanaBasePanelTpl extends BasepanelTpl {
+public class GrafanaBasePanelTpl extends BasePanelTpl {
 
     @SerializedName("datasource")
     @Expose
