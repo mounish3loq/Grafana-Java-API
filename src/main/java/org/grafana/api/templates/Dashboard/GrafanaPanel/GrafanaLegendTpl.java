@@ -2,8 +2,12 @@ package org.grafana.api.templates.Dashboard.GrafanaPanel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import org.grafana.api.octocharts.OctoHeatmapChart;
+
+import java.util.logging.Logger;
 
 public class GrafanaLegendTpl{
+    static Logger log = Logger.getLogger(GrafanaLegendTpl.class.getName());
     @SerializedName("percentage")
     @Expose
     private boolean percentage;
@@ -20,6 +24,7 @@ public class GrafanaLegendTpl{
         this.percentage = true;
         this.show = true;
         this.values = true;
+        log.info("Grafana Legend Template");
     }
 
     public boolean isPercentage() {

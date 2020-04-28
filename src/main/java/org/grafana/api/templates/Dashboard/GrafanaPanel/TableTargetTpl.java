@@ -2,13 +2,16 @@ package org.grafana.api.templates.Dashboard.GrafanaPanel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import org.grafana.api.octocharts.OctoHeatmapChart;
 import org.grafana.api.templates.Dashboard.PlotlyPanel.Targets.WhereTpl;
 import org.grafana.api.templates.Dashboard.abstractbasepanel.BaseTargetsTpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class TableTargetTpl extends BaseTargetsTpl {
+    static Logger log = Logger.getLogger(TableTargetTpl.class.getName());
 
     public String getRefId() {
         return refId;
@@ -138,6 +141,7 @@ public class TableTargetTpl extends BaseTargetsTpl {
         this.where.add(new WhereTpl());
         this.select = new ArrayList<>();
         this.select.add(new String[]{});
+        log.info("TableTargetTpl Done");
 
     }
 

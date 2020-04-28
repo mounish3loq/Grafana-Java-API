@@ -7,13 +7,20 @@ import org.grafana.api.templates.Charts.PlotlyPanelChart;
 import org.grafana.api.templates.Dashboard.GrafanaPanel.LineGraphLegendTpl;
 import org.grafana.api.templates.Dashboard.GrafanaPanel.LineGraphPanelTpl;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class OctoLineChart extends OctoBaseChart {
+    static Logger log = Logger.getLogger(OctoLineChart.class.getName());
     private String dashboarduid;
     private String dashboardtitle;
     private String tableName;
     private String columns;
     public LineGraphPanelTpl lineGraph;
+    private String timeColumn;
+
     public OctoLineChart(SparkSession spark, String dashboarduid, Dataset<Row> df, String workunitname, String summaryname, String paneltitle){
+        log.info("OctoLineChart Spark Session : "+spark + " Dashboard UID: "+dashboarduid+ " Table Name : "+workunitname+"_"+summaryname+"Panel Title : "+paneltitle);
         this.dashboarduid = dashboarduid;
         this.lineGraph = new LineGraphPanelTpl();
         this.lineGraph.setDatasource("PostgreSQL");
@@ -26,12 +33,20 @@ public class OctoLineChart extends OctoBaseChart {
         this.updateChartData(spark,df,dashboarduid,workunitname,summaryname);
     }
 
+
+    public void setTimeColumn(String timeColumn) {
+        this.timeColumn = timeColumn;
+    }
     public void setColumns(String cols){
         this.columns = cols;
     }
     public void publish(){
-        String query = String.format("SELECT\n  year_month AS \"time\", %s FROM %s \nWHERE\n  $__timeFilter(year_month)\nORDER BY 1",this.columns,this.tableName);
+        String query = String.format("SELECT\n  %s AS \"time\", %s FROM %s \nWHERE\n  $__timeFilter(year_month)\nORDER BY 1",this.timeColumn,this.columns,this.tableName);
         this.lineGraph.setTargets(query,this.tableName,"time_series");
-        publish(this.dashboarduid,null,this.lineGraph);
+        try {
+            publish(this.dashboarduid, null, this.lineGraph);
+        }catch (Exception e){
+            log.log(Level.SEVERE,"OctoLine Chart Publish Exception "+e.toString());
+        }
     }
 }

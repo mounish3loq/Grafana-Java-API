@@ -2,8 +2,12 @@ package org.grafana.api.templates.Dashboard.GrafanaPanel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import org.grafana.api.octocharts.OctoHeatmapChart;
+
+import java.util.logging.Logger;
 
 public class LineGraphYAxesJSONTpl{
+    static Logger log = Logger.getLogger(LineGraphYAxesJSONTpl.class.getName());
 
     @SerializedName("format")
     @Expose
@@ -36,5 +40,6 @@ public class LineGraphYAxesJSONTpl{
         this.max = null;
         this.min= null;
         this.show = true;
+        log.info("LineGraphYAxesJSON Done");
     }
 }

@@ -2,8 +2,13 @@ package org.grafana.api.templates.Dashboard.GrafanaPanel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import org.grafana.api.octocharts.OctoHeatmapChart;
+
+import java.util.logging.Logger;
 
 public class LineGraphXAxis{
+    static Logger log = Logger.getLogger(LineGraphXAxis.class.getName());
+
     @SerializedName("buckets")
     @Expose
     private Integer buckets;
@@ -30,6 +35,6 @@ public class LineGraphXAxis{
         this.name = null;
         this.show = true;
         this.values= new String[]{};
-
+        log.info("LienGraph X Access Done");
     }
 }
