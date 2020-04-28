@@ -1,11 +1,14 @@
 
 package org.grafana.api.templates.Dashboard;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import org.grafana.api.templates.Dashboard.GrafanaPanel.GrafanaBasePanelTpl;
 import org.grafana.api.templates.Dashboard.PlotlyPanel.PlotlyPanelTpl;
-import org.grafana.api.templates.Dashboard.abstractbasepanel.BasepanelTpl;
+import org.grafana.api.templates.Dashboard.abstractbasepanel.BasePanelTpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +18,24 @@ import java.util.List;
  * @author jh
  */
 public class DashboardTpl {
+    /**
+     *
+     * @return
+     */
+    public String getUid() {
+        return uid;
+    }
+    /**
+     *
+     * @param uid
+     */
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    @SerializedName("uid")
+    @Expose
+    private String uid;
 
     @SerializedName("annotations")
     @Expose
@@ -31,15 +52,12 @@ public class DashboardTpl {
     @SerializedName("id")
     @Expose
     private Object id;
-    @SerializedName("uid")
-    @Expose
-    private Object uid;
     @SerializedName("links")
     @Expose
     private List<Object> links = new ArrayList<>();
     @SerializedName("panels")
     @Expose
-    private List<BasepanelTpl> panels = new ArrayList<>();
+    private ArrayList panels = new ArrayList<>();
     @SerializedName("refresh")
     @Expose
     private Boolean refresh;
@@ -150,22 +168,6 @@ public class DashboardTpl {
     public void setId(Object id) {
         this.id = id;
     }
-    /**
-     *
-     * @return
-     */
-    public Object getUid() {
-        return uid;
-    }
-
-    /**
-     *
-     * @param uid
-     */
-    public void setUid(Object uid) {
-        this.uid = uid;
-    }
-
 
     /**
      *
@@ -187,7 +189,7 @@ public class DashboardTpl {
      *
      * @return
      */
-    public List<BasepanelTpl> getPanels() {
+    public List<?> getPanels() {
         return panels;
     }
 
@@ -195,10 +197,10 @@ public class DashboardTpl {
      *
      * @param panels
      */
-    public void setPanels(List<BasepanelTpl> panels) {
+    public void setPanels(ArrayList panels) {
         this.panels = panels;
     }
-    public void setPanels(BasepanelTpl panel) {
+    public void setPanels(BasePanelTpl panel) {
         this.panels.add(panel);
     }
 

@@ -90,7 +90,7 @@ public class ServerRequest {
 
             URL serverURL = new URL(grafanaApi.getServerURL());
             URL fullURL = new URL(serverURL, path);
-            System.out.println(fullURL);
+            Logger.getLogger(ServerRequest.class.getName()).info(String.valueOf(fullURL));
             HttpURLConnection conn;
             try {
                 conn = (HttpURLConnection) fullURL.openConnection();
@@ -98,7 +98,7 @@ public class ServerRequest {
                 conn.setDoInput(true);
                 conn.setUseCaches(false);
                 try {
-                    System.out.println("Method used" + methode);
+                    Logger.getLogger(ServerRequest.class.getName()).info("Method used" + methode);
                     conn.setRequestMethod(methode);
                 } catch (ProtocolException ex) {
                     Logger.getLogger(ServerRequest.class.getName()).log(Level.SEVERE, null, ex);
@@ -116,7 +116,7 @@ public class ServerRequest {
                     }
                 }
                 try{
-                    System.out.println(conn.getResponseCode());
+                    Logger.getLogger(ServerRequest.class.getName()).info(String.valueOf(conn.getResponseCode()));
                     InputStream stream = conn.getInputStream();
                     try (JsonReader jReader = new JsonReader(new InputStreamReader(stream))) {
                         Gson gson = new GsonBuilder().create();

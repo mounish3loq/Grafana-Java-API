@@ -2,8 +2,13 @@ package org.grafana.api.templates.Dashboard.GrafanaPanel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import org.grafana.api.octocharts.OctoHeatmapChart;
+
+import java.util.logging.Logger;
 
 public  class LineGraphLegendTpl{
+    static Logger log = Logger.getLogger(LineGraphLegendTpl.class.getName());
+
     @SerializedName("avg")
     @Expose
     private boolean avg;
@@ -37,9 +42,10 @@ public  class LineGraphLegendTpl{
         this.current= false;
         this.max =false;
         this.min= false;
-        this.show= false;
+        this.show= true;
         this.total = false;
         this.values = false;
+        log.info("Line Graph Panel");
     }
 
     public boolean isAvg() {

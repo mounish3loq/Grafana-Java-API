@@ -2,14 +2,18 @@ package org.grafana.api.templates.Dashboard.GrafanaPanel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import org.grafana.api.octocharts.OctoBarChart;
 import org.grafana.api.templates.Dashboard.PlotlyPanel.PlotlyGridPosTpl;
 import org.grafana.api.templates.Dashboard.abstractbasepanel.BaseTargetsTpl;
-import org.grafana.api.templates.Dashboard.abstractbasepanel.BasepanelTpl;
+import org.grafana.api.templates.Dashboard.abstractbasepanel.BasePanelTpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
-public class GrafanaBasePanelTpl extends BasepanelTpl {
+
+public class GrafanaBasePanelTpl extends BasePanelTpl {
+    static Logger log = Logger.getLogger(GrafanaBasePanelTpl.class.getName());
 
     @SerializedName("datasource")
     @Expose
@@ -125,9 +129,12 @@ public class GrafanaBasePanelTpl extends BasepanelTpl {
         this.gridPos = new PlotlyGridPosTpl();
         this.gridPos.setH(8);
         this.gridPos.setW(24);
+        this.gridPos.setX(0);
         this.gridPos.setY(48);
         this.timefrom = null;
         this.timeshift = null;
+        String s = String.format("H %s, W %s , X %s , Y *s  ",this.gridPos.getH(),this.gridPos.getW(),this.gridPos.getX(),this.gridPos.getY());
+        log.info(s);
     }
 
 }

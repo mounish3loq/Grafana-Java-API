@@ -3,14 +3,17 @@ package org.grafana.api.templates.Dashboard.GrafanaPanel;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import org.grafana.api.octocharts.OctoHeatmapChart;
 import org.grafana.api.templates.Dashboard.GrafanaPanel.tablestyles.TableStylesTpl1;
 import org.grafana.api.templates.Dashboard.GrafanaPanel.tablestyles.TableStylesTpl2;
 import org.grafana.api.templates.Dashboard.abstractbasepanel.BaseTargetsTpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class TablePanelTpl extends GrafanaBasePanelTpl {
+    static Logger log = Logger.getLogger(TablePanelTpl.class.getName());
 
     @SerializedName("options")
     @Expose
@@ -130,6 +133,7 @@ public class TablePanelTpl extends GrafanaBasePanelTpl {
         this.pageSize = null;
         this.showHeader = true;
         this.fontSize ="100%";
+        log.info("TablePanelTPL Done");
     }
 
 
