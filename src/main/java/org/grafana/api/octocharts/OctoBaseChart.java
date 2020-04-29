@@ -21,14 +21,14 @@ public abstract class OctoBaseChart {
 
         String tableName = workunitname +"_"+ summaryname;
         Properties connectionProperties = new Properties();
-        connectionProperties.put("user", System.getenv("POSTGRES_USERNAME"));
-        connectionProperties.put("password", System.getenv("POSTGRES_PASSWORD"));
+        connectionProperties.put("user", System.getenv("GRAFANA_POSTGRES_USERNAME"));
+        connectionProperties.put("password", System.getenv("GRAFANA_POSTGRES_PASSWORD"));
         df = df.withColumn("dashboardid",functions.lit(dashboarduid));
         df = df.withColumn("workunitname", functions.lit(workunitname));
         df = df.withColumn("summaryname",functions.lit(summaryname));
         df.write()
                 .mode("append")
-                .jdbc("jdbc:postgresql://"+System.getenv("POSTGRES_URL")+"/"+System.getenv("POSTGRES_DB"), tableName, connectionProperties);
+                .jdbc("jdbc:postgresql://"+System.getenv("GRAFANA_POSTGRES_URL")+"/"+System.getenv("GRAFANA_POSTGRES_DB"), tableName, connectionProperties);
     }
   
     public void publish(String uid, String dashboardtitle, BasePanelTpl panel){

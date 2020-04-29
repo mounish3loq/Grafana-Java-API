@@ -16,7 +16,7 @@ public class OctoTableChart extends OctoBaseChart {
     public OctoTableChart(SparkSession spark, String dashboarduid, Dataset<Row> df, String workunitname, String summaryname, String paneltitle){
         this.dashboarduid = dashboarduid;
         this.tablepanel = new TablePanelTpl();
-        this.tablepanel.setDatasource(System.getenv("POSTGRES_DATASOURCE"));
+        this.tablepanel.setDatasource(System.getenv("GRAFANA_POSTGRES_DATASOURCE"));
         this.tablepanel.setTitle(paneltitle);
         this.tablepanel.setType("table");
         this.tableName=workunitname+"_"+summaryname;

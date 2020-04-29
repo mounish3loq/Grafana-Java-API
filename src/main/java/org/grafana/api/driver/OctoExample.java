@@ -21,15 +21,15 @@ public class OctoExample {
                 .config("spark.some.config.option", "some-value")
                 .getOrCreate();
         Properties connectionProperties = new Properties();
-        connectionProperties.put("user", System.getenv("POSTGRES_USERNAME"));
-        connectionProperties.put("password", System.getenv("POSTGRES_PASSWORD"));
+        connectionProperties.put("user", System.getenv("GRAFANA_POSTGRES_USERNAME"));
+        connectionProperties.put("password", System.getenv("GRAFANA_POSTGRES_PASSWORD"));
         Dataset<Row> df =spark.read()
-                .jdbc("jdbc:postgresql://"+System.getenv("POSTGRES_URL")+"/"+System.getenv("POSTGRES_DB"), "table1", connectionProperties);
+                .jdbc("jdbc:postgresql://"+System.getenv("GRAFANA_POSTGRES_URL")+"/"+System.getenv("GRAFANA_POSTGRES_DB"), "table1", connectionProperties);
         Dataset<Row> df2 =spark.read()
-                .jdbc("jdbc:postgresql://"+System.getenv("POSTGRES_URL")+"/"+System.getenv("POSTGRES_DB"), "mytable", connectionProperties);
+                .jdbc("jdbc:postgresql://"+System.getenv("GRAFANA_POSTGRES_URL")+"/"+System.getenv("GRAFANA_POSTGRES_DB"), "mytable", connectionProperties);
 
         Dataset<Row> df3 =spark.read()
-                .jdbc("jdbc:postgresql://"+System.getenv("POSTGRES_URL")+"/"+System.getenv("POSTGRES_DB"), "sample_heatmap_table", connectionProperties);
+                .jdbc("jdbc:postgresql://"+System.getenv("GRAFANA_POSTGRES_URL")+"/"+System.getenv("GRAFANA_POSTGRES_DB"), "sample_heatmap_table", connectionProperties);
 
         OctoLineChart octoLineChart = new OctoLineChart(spark,"ABCDE",df2,"Lineworkunit","LineSummary","Line chart");
         octoLineChart.setTimeColumn("year_month");

@@ -27,7 +27,7 @@ public class OctoHeatmapChart extends OctoBaseChart{
         this.uid = dashboarduid;
         this.dashboardtitle = null;
         this.heatmapPanel = new PlotlyHeatmapPanelChart();
-        this.heatmapPanel.setDatasource(System.getenv("POSTGRES_DATASOURCE"));
+        this.heatmapPanel.setDatasource(System.getenv("GRAFANA_POSTGRES_DATASOURCE"));
         this.heatmapPanel.setPconfig(xtitle,ytitle);
         this.heatmapPanel.setTitle(paneltitle);
         this.tableName=workunitname+"_"+summaryname;
