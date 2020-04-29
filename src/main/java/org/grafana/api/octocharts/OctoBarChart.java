@@ -26,7 +26,7 @@ public class OctoBarChart extends OctoBaseChart{
         this.uid = dashboarduid;
         this.dashboardTitle = null;
         this.barpanel = new PlotlyPanelChart();
-        this.barpanel.setDatasource(System.getenv("POSTGRES_DATASOURCE"));
+        this.barpanel.setDatasource(System.getenv("GRAFANA_POSTGRES_DATASOURCE"));
         this.barpanel.setPconfig(xtitle,ytitle,"bar");
         this.barpanel.setTitle(paneltitle);
         this.tableName=workunitname+"_"+summaryname;

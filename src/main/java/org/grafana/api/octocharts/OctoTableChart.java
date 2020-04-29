@@ -17,7 +17,7 @@ public class OctoTableChart extends OctoBaseChart {
         this.dashboarduid = dashboarduid;
         this.dashboardtitle = null;
         this.tablepanel = new TablePanelTpl();
-        this.tablepanel.setDatasource(System.getenv("POSTGRES_DATASOURCE"));
+        this.tablepanel.setDatasource(System.getenv("GRAFANA_POSTGRES_DATASOURCE"));
         this.tablepanel.setTitle(paneltitle);
         this.tablepanel.setType("table");
         this.tableName=workunitname+"_"+summaryname;
