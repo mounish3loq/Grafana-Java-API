@@ -28,7 +28,7 @@ public class OctoTableChart extends OctoBaseChart {
     public void publish(){
         String query = String.format("SELECT\n %s FROM %s where dashboardid = \'%s\'",this.columns,this.tableName,this.dashboarduid);
         this.tablepanel.setTargets(query);
-        publish(this.dashboarduid,null,this.tablepanel);
+        super.publish(this.dashboarduid,null,this.tablepanel);
     }
     public void setDashboardtitle(String dashboardtitle){
         this.dashboardtitle = dashboardtitle;
