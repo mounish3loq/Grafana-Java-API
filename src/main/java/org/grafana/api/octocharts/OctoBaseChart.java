@@ -40,10 +40,11 @@ public abstract class OctoBaseChart {
         log.info("Method Name : BasePanelTpl Publish"+"Uid : "+uid + "Dashboard Title : "+dashboardtitle);
 
         String grafanaserver = System.getenv("GRAFANA_SERVER");
-        String mainOrgApiKey = System.getenv("GRAFANA_APIKEY");
+        String grafana_username = System.getenv("GRAFANA_USERNAME");
+        String grafana_password = System.getenv("GRAFANA_PASSWORD");
         GrafanaAPI grafanaAPI = new GrafanaAPI(grafanaserver);
         DashboardTpl dashItems;
-        DashboardRsp dashboardRsp = grafanaAPI.orgAdminAPI(mainOrgApiKey).getDashboardByUid(uid);
+        DashboardRsp dashboardRsp = grafanaAPI.orgAdminAPI(grafana_username,grafana_password).getDashboardByUid(uid);
         if (dashboardRsp == null){
             dashItems = new DashboardTpl();
             dashItems.setUid(uid);
@@ -58,6 +59,6 @@ public abstract class OctoBaseChart {
         CreateUpdateDashboardTpl dashTest = new CreateUpdateDashboardTpl();
         dashItems.setPanels(panel);
         dashTest.setDashboard(dashItems);
-        NewCreateUpdateDashboardRsp createUpdateDashboard = grafanaAPI.orgAdminAPI(mainOrgApiKey).createUpdateDashboard(dashTest);
+        NewCreateUpdateDashboardRsp createUpdateDashboard = grafanaAPI.orgAdminAPI(grafana_username,grafana_password).createUpdateDashboard(dashTest);
     }
 }
