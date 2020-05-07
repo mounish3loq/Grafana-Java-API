@@ -40,19 +40,20 @@ public class OctoBarChart extends OctoBaseChart{
         this.barpanel.setTargets(String.format("select %s,%s from %s where dashboardid = \'%s\'",xmapping,ymapping,this.tableName,this.uid));
     }
     public void setTarget(String query){
-        log.info("Set Target ");this.barpanel.setTargets(query);
+        log.info("Set Target ");
+        this.barpanel.setTargets(query);
     }
 
 
     public void setDashboardtitle(String dashboardtitle){
         this.dashboardTitle = dashboardtitle;
-        log.info("Set Dashboard Title: "+ dashboardtitle);this.dashboardTitle = dashboardtitle;
+        log.info("Set Dashboard Title: "+ dashboardtitle);
     }
     public void publish(){
 
         log.info("OctoBar Chart Publish");
         try{
-        publish(this.uid,null,this.barpanel);
+        publish(this.uid,this.dashboardTitle,this.barpanel);
     }catch (Exception e){
             log.log(Level.SEVERE,"Excepion "+e);
         }
