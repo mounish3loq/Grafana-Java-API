@@ -29,7 +29,7 @@ import java.util.logging.Logger;
 public class ServerRequest {
 
     private final GrafanaAPI grafanaApi;
-
+    static Logger log = Logger.getLogger("myLogger");
     /**
      *
      * @param grafanaApi
@@ -87,10 +87,13 @@ public class ServerRequest {
         JsonElement jsonResult = null;
         int returnCode = 0;
         try {
-
-            URL serverURL = new URL(grafanaApi.getServerURL());
+            log.info(grafanaApi.getServerURL());
+            String baseurl = "http://" + grafanaApi.getServerURL();
+            //URL serverURL = new URL(grafanaApi.getServerURL());
+            //URL fullURL = new URL(serverURL, path);
+            URL serverURL = new URL(baseurl);
             URL fullURL = new URL(serverURL, path);
-            Logger.getLogger(ServerRequest.class.getName()).info(String.valueOf(fullURL));
+            log.info(String.valueOf(fullURL));
             HttpURLConnection conn;
             try {
                 conn = (HttpURLConnection) fullURL.openConnection();
@@ -98,10 +101,10 @@ public class ServerRequest {
                 conn.setDoInput(true);
                 conn.setUseCaches(false);
                 try {
-                    Logger.getLogger(ServerRequest.class.getName()).info("Method used" + methode);
+                    log.info("Method used" + methode);
                     conn.setRequestMethod(methode);
                 } catch (ProtocolException ex) {
-                    Logger.getLogger(ServerRequest.class.getName()).log(Level.SEVERE, null, ex);
+                    log.log(Level.SEVERE, null, ex);
                 }
                 conn.addRequestProperty("Accept", "application/json");
                 conn.addRequestProperty("Authorization", authorization);
@@ -116,7 +119,7 @@ public class ServerRequest {
                     }
                 }
                 try{
-                    Logger.getLogger(ServerRequest.class.getName()).info(String.valueOf(conn.getResponseCode()));
+                    log.info(String.valueOf(conn.getResponseCode()));
                     InputStream stream = conn.getInputStream();
                     try (JsonReader jReader = new JsonReader(new InputStreamReader(stream))) {
                         Gson gson = new GsonBuilder().create();
@@ -127,12 +130,13 @@ public class ServerRequest {
                     conn.disconnect();
                     return jsonResult;
                 }catch(IOException ex){
-                    //Logger.getLogger(ServerRequest.class.getName()).log(Level.SEVERE, null, ex);
+                    log.log(Level.SEVERE, null, ex);
                     conn.disconnect();
                     return null;
                 }
             } catch (IOException ex) {
-                //Logger.getLogger(ServerRequest.class.getName()).log(Level.SEVERE, null, ex);
+                log.log(Level.SEVERE, null, ex);
+                return null;
             }
 
             /*
@@ -145,6 +149,7 @@ public class ServerRequest {
              */
             //conn.getResponseCode()
         } catch (MalformedURLException e) {
+            log.log(Level.SEVERE, null, e);
             //e.printStackTrace(System.out);
             return null;
         }
@@ -161,6 +166,5 @@ public class ServerRequest {
          return also the result code
          */
         //List returnlist =
-        return null;
     }
 }

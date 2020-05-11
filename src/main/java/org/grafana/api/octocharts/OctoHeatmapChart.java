@@ -21,6 +21,7 @@ public class OctoHeatmapChart extends OctoBaseChart{
     private String uid;
     private String dashboardtitle;
     private String tableName;
+    private String workunitName;
     public PlotlyHeatmapPanelChart heatmapPanel;
   
     public OctoHeatmapChart(SparkSession spark, String dashboarduid, Dataset<Row> df, String workunitname, String summaryname, String xtitle, String ytitle, String paneltitle){
@@ -30,7 +31,8 @@ public class OctoHeatmapChart extends OctoBaseChart{
         this.heatmapPanel.setDatasource(System.getenv("GRAFANA_POSTGRES_DATASOURCE"));
         this.heatmapPanel.setPconfig(xtitle,ytitle);
         this.heatmapPanel.setTitle(paneltitle);
-        this.tableName=workunitname+"_"+summaryname;
+        this.workunitName = workunitname;
+        this.tableName=workunitname.substring(workunitname.lastIndexOf('.') + 1) +"_"+ summaryname;
         this.updateChartData(spark,df,dashboarduid,workunitname,summaryname);
     }
     public void setTrace(String xmapping,String ymapping,String zmapping){
@@ -51,7 +53,7 @@ public class OctoHeatmapChart extends OctoBaseChart{
 
     public void publish(){
         try {
-            publish(this.uid,this.dashboardtitle,this.heatmapPanel);
+            super.publish(this.uid,this.dashboardtitle,this.heatmapPanel,this.workunitName);
         }catch (Exception e){
             log.log(Level.SEVERE,"HeatMap Publish Exception "+e.toString());
         }

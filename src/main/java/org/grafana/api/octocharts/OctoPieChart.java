@@ -10,6 +10,7 @@ public class OctoPieChart extends OctoBaseChart {
     private String dashboardtitle;
     private String tableName;
     private String columns;
+    private String workunitName;
     public PieChartPanelTpl piepanel;
 
     public OctoPieChart(SparkSession spark, String dashboarduid, Dataset<Row> df, String workunitname, String summaryname, String paneltitle){
@@ -18,6 +19,8 @@ public class OctoPieChart extends OctoBaseChart {
         this.piepanel.setDatasource(System.getenv("GRAFANA_POSTGRES_DATASOURCE"));
         this.piepanel.setTitle(paneltitle);
         this.piepanel.setPieType("pie");
+        this.workunitName=workunitname;
+        this.tableName=workunitname.substring(workunitname.lastIndexOf('.') + 1) +"_"+ summaryname;
         this.updateChartData(spark,df,dashboarduid,workunitname,summaryname);
     }
 
@@ -31,7 +34,7 @@ public class OctoPieChart extends OctoBaseChart {
     public void publish(){
         String query = String.format("SELECT\n now() as time, %s FROM %s where dashboardid = \'%s\'",this.columns,this.tableName,this.dashboarduid);
         this.piepanel.setTargets(query,"time_series");
-        publish(this.dashboarduid,this.dashboardtitle,this.piepanel);
+        super.publish(this.dashboarduid,this.dashboardtitle,this.piepanel,this.workunitName);
     }
     public void setDashboardtitle(String dashboardtitle){
         this.dashboardtitle = dashboardtitle;

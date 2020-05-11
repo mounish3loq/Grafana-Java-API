@@ -13,16 +13,15 @@ import org.grafana.api.responses.Dashboard.NewCreateUpdateDashboardRsp;
 import org.grafana.api.templates.Dashboard.abstractbasepanel.BasePanelTpl;
 
 import java.util.Properties;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import java.time.LocalDateTime;
+
 public abstract class OctoBaseChart {
-    //static Logger log = Logger.getLogger(OctoBaseChart.class.getName());
     static Logger log = Logger.getLogger("myLogger");
     public void updateChartData(SparkSession spark,Dataset<Row> df,String dashboarduid,String workunitname,String summaryname){
         String tableName = workunitname.substring(workunitname.lastIndexOf('.') + 1) +"_"+ summaryname;
-        log.info("UpdateChartData "+" Spark Session Id: " + spark +" Table Name: " + workunitname+"_"+summaryname);
-
+        log.info("UpdateChartData "+" Spark Session Id: " + spark +" Table Name: " + tableName);
         Properties connectionProperties = new Properties();
         connectionProperties.put("user", System.getenv("GRAFANA_POSTGRES_USERNAME"));
         connectionProperties.put("password", System.getenv("GRAFANA_POSTGRES_PASSWORD"));
@@ -36,7 +35,7 @@ public abstract class OctoBaseChart {
                 .jdbc("jdbc:postgresql://"+System.getenv("GRAFANA_POSTGRES_URL")+"/"+System.getenv("GRAFANA_POSTGRES_DB"), tableName, connectionProperties);
     }
 
-    public void publish(String uid, String dashboardtitle, BasePanelTpl panel){
+    public void publish(String uid, String dashboardtitle, BasePanelTpl panel,String workunitName){
         log.info("Method Name : BasePanelTpl Publish"+"Uid : "+uid + "Dashboard Title : "+dashboardtitle);
 
         String grafanaserver = System.getenv("GRAFANA_SERVER");
@@ -49,7 +48,8 @@ public abstract class OctoBaseChart {
             dashItems = new DashboardTpl();
             dashItems.setUid(uid);
             if (dashboardtitle == null) {
-                dashItems.setTitle("MyTestTitle2");
+                LocalDateTime localDt= LocalDateTime.now();
+                dashItems.setTitle(workunitName.substring(workunitName.lastIndexOf('.') + 1) +"_"+localDt);
             }else{
                 dashItems.setTitle(dashboardtitle);
             }
@@ -60,5 +60,6 @@ public abstract class OctoBaseChart {
         dashItems.setPanels(panel);
         dashTest.setDashboard(dashItems);
         NewCreateUpdateDashboardRsp createUpdateDashboard = grafanaAPI.orgAdminAPI(grafana_username,grafana_password).createUpdateDashboard(dashTest);
+        log.info("success");
     }
 }

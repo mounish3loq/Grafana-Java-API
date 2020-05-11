@@ -17,6 +17,7 @@ public class OctoBarChart extends OctoBaseChart{
     private String uid;
     private String dashboardTitle;
     private String tableName;
+    private String workunitName;
     public PlotlyPanelChart barpanel;
 
     public OctoBarChart(SparkSession spark,String dashboarduid, Dataset<Row> df, String workunitname, String summaryname, String xtitle, String ytitle, String paneltitle){
@@ -29,7 +30,8 @@ public class OctoBarChart extends OctoBaseChart{
         this.barpanel.setDatasource(System.getenv("GRAFANA_POSTGRES_DATASOURCE"));
         this.barpanel.setPconfig(xtitle,ytitle,"bar");
         this.barpanel.setTitle(paneltitle);
-        this.tableName=workunitname+"_"+summaryname;
+        this.workunitName = workunitname;
+        this.tableName=workunitname.substring(workunitname.lastIndexOf('.') + 1) +"_"+ summaryname;
         this.updateChartData(spark,df,dashboarduid,workunitname,summaryname);
 
 
@@ -53,7 +55,7 @@ public class OctoBarChart extends OctoBaseChart{
 
         log.info("OctoBar Chart Publish");
         try{
-        publish(this.uid,this.dashboardTitle,this.barpanel);
+        super.publish(this.uid,this.dashboardTitle,this.barpanel,this.workunitName);
     }catch (Exception e){
             log.log(Level.SEVERE,"Excepion "+e);
         }
