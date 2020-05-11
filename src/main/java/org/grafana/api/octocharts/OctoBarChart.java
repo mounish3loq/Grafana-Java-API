@@ -29,7 +29,7 @@ public class OctoBarChart extends OctoBaseChart{
         this.barpanel.setDatasource(System.getenv("GRAFANA_POSTGRES_DATASOURCE"));
         this.barpanel.setPconfig(xtitle,ytitle,"bar");
         this.barpanel.setTitle(paneltitle);
-        this.tableName=workunitname+"_"+summaryname;
+        this.tableName=workunitname.substring(workunitname.lastIndexOf('.') + 1) +"_"+ summaryname;
         this.updateChartData(spark,df,dashboarduid,workunitname,summaryname);
 
 

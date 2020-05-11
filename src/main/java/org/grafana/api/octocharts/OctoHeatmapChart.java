@@ -30,7 +30,7 @@ public class OctoHeatmapChart extends OctoBaseChart{
         this.heatmapPanel.setDatasource(System.getenv("GRAFANA_POSTGRES_DATASOURCE"));
         this.heatmapPanel.setPconfig(xtitle,ytitle);
         this.heatmapPanel.setTitle(paneltitle);
-        this.tableName=workunitname+"_"+summaryname;
+        this.tableName=workunitname.substring(workunitname.lastIndexOf('.') + 1) +"_"+ summaryname;
         this.updateChartData(spark,df,dashboarduid,workunitname,summaryname);
     }
     public void setTrace(String xmapping,String ymapping,String zmapping){

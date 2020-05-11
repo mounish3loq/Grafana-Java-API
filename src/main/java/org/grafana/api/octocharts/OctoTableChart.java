@@ -20,7 +20,7 @@ public class OctoTableChart extends OctoBaseChart {
         this.tablepanel.setDatasource(System.getenv("GRAFANA_POSTGRES_DATASOURCE"));
         this.tablepanel.setTitle(paneltitle);
         this.tablepanel.setType("table");
-        this.tableName=workunitname+"_"+summaryname;
+        this.tableName=workunitname.substring(workunitname.lastIndexOf('.') + 1) +"_"+ summaryname;
         this.updateChartData(spark,df,dashboarduid,workunitname,summaryname);
     }
     public void setColumns(String cols){

@@ -34,7 +34,6 @@ public class OctoExample {
         OctoLineChart octoLineChart = new OctoLineChart(spark,"ABCDE",df2,"Lineworkunit","LineSummary","Line chart");
         octoLineChart.setTimeColumn("year_month");
         octoLineChart.setColumns("varejo AS \"Varejo\",vestuario AS \"Vestuario\",\"serviÇo\" AS \"Serviço\",supermercados AS \"Supermercados\",restaurante AS \"Restaurante\", \"posto_de_gas\" AS \"Posto De Gas\"");
-        octoLineChart.setTimeColumn("year_month");
         octoLineChart.publish();
 
         OctoBarChart octoBarChart = new OctoBarChart(spark,"ABCDE",df,"Sampleworkunit","SampleSummary","xdata","ydata","Bar chart");

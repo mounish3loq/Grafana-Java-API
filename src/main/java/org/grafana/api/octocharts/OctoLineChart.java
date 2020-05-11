@@ -30,7 +30,7 @@ public class OctoLineChart extends OctoBaseChart {
         LineGraphLegendTpl lgl = new LineGraphLegendTpl();
         lgl.setShow(true);
         this.lineGraph.setLegend(lgl);
-        this.tableName=workunitname+"_"+summaryname;
+        this.tableName=workunitname.substring(workunitname.lastIndexOf('.') + 1) +"_"+ summaryname;
         this.updateChartData(spark,df,dashboarduid,workunitname,summaryname);
     }
     public void setColumns(String cols){

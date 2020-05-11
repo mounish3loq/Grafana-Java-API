@@ -18,6 +18,7 @@ public class OctoPieChart extends OctoBaseChart {
         this.piepanel.setDatasource(System.getenv("GRAFANA_POSTGRES_DATASOURCE"));
         this.piepanel.setTitle(paneltitle);
         this.piepanel.setPieType("pie");
+        this.tableName=workunitname.substring(workunitname.lastIndexOf('.') + 1) +"_"+ summaryname;
         this.updateChartData(spark,df,dashboarduid,workunitname,summaryname);
     }
 
