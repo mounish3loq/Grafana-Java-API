@@ -15,10 +15,9 @@ import org.grafana.api.templates.Dashboard.abstractbasepanel.BasePanelTpl;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-import java.time.*;
+import java.time.LocalDateTime;
 
 public abstract class OctoBaseChart {
-    //static Logger log = Logger.getLogger(OctoBaseChart.class.getName());
     static Logger log = Logger.getLogger("myLogger");
     public void updateChartData(SparkSession spark,Dataset<Row> df,String dashboarduid,String workunitname,String summaryname){
         String tableName = workunitname.substring(workunitname.lastIndexOf('.') + 1) +"_"+ summaryname;
@@ -36,7 +35,7 @@ public abstract class OctoBaseChart {
                 .jdbc("jdbc:postgresql://"+System.getenv("GRAFANA_POSTGRES_URL")+"/"+System.getenv("GRAFANA_POSTGRES_DB"), tableName, connectionProperties);
     }
 
-    public void publish(String uid, String dashboardtitle, BasePanelTpl panel){
+    public void publish(String uid, String dashboardtitle, BasePanelTpl panel,String workunitName){
         log.info("Method Name : BasePanelTpl Publish"+"Uid : "+uid + "Dashboard Title : "+dashboardtitle);
 
         String grafanaserver = System.getenv("GRAFANA_SERVER");
@@ -49,9 +48,8 @@ public abstract class OctoBaseChart {
             dashItems = new DashboardTpl();
             dashItems.setUid(uid);
             if (dashboardtitle == null) {
-                LocalDateTime local= LocalDateTime.now();
-                String localdt = String.valueOf(local);
-                dashItems.setTitle(uid);
+                LocalDateTime localDt= LocalDateTime.now();
+                dashItems.setTitle(workunitName.substring(workunitName.lastIndexOf('.') + 1) +"_"+localDt);
             }else{
                 dashItems.setTitle(dashboardtitle);
             }

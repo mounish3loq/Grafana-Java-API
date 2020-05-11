@@ -17,6 +17,7 @@ public class OctoLineChart extends OctoBaseChart {
     private String tableName;
     private String columns;
     private String timecolumn;
+    private String workunitName;
     public LineGraphPanelTpl lineGraph;
 
     public OctoLineChart(SparkSession spark, String dashboarduid, Dataset<Row> df, String workunitname, String summaryname, String paneltitle){
@@ -30,6 +31,7 @@ public class OctoLineChart extends OctoBaseChart {
         LineGraphLegendTpl lgl = new LineGraphLegendTpl();
         lgl.setShow(true);
         this.lineGraph.setLegend(lgl);
+        this.workunitName = workunitname;
         this.tableName=workunitname.substring(workunitname.lastIndexOf('.') + 1) +"_"+ summaryname;
         this.updateChartData(spark,df,dashboarduid,workunitname,summaryname);
     }
@@ -43,7 +45,7 @@ public class OctoLineChart extends OctoBaseChart {
         String query = String.format("SELECT\n  %s AS \"time\", %s FROM %s \nWHERE\n dashboardid = \'%s\' and $__timeFilter(%s)\nORDER BY 1",this.timecolumn,this.columns,this.tableName,this.dashboarduid,this.timecolumn);
         this.lineGraph.setTargets(query,this.tableName,"time_series");
         try {
-            publish(this.dashboarduid, this.dashboardtitle, this.lineGraph);
+            super.publish(this.dashboarduid, this.dashboardtitle, this.lineGraph,this.workunitName);
         }catch (Exception e){
             log.log(Level.SEVERE,"OctoLine Chart Publish Exception "+e.toString());
         }
