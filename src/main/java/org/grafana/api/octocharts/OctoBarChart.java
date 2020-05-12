@@ -8,16 +8,15 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.grafana.api.templates.Charts.PlotlyPanelChart;
-
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 public class OctoBarChart extends OctoBaseChart{
-    static Logger log = Logger.getLogger(OctoBarChart.class.getName());
-    private String uid;
+    //static Logger log = Logger.getLogger(OctoBarChart.class.getName());
+    static Logger log = Logger.getLogger("myLogger");
+    private final String uid;
     private String dashboardTitle;
-    private String tableName;
-    private String workunitName;
+    private final String tableName;
+    private final String workunitName;
     public PlotlyPanelChart barpanel;
 
     public OctoBarChart(SparkSession spark,String dashboarduid, Dataset<Row> df, String workunitname, String summaryname, String xtitle, String ytitle, String paneltitle){

@@ -3,7 +3,6 @@ package org.grafana.api.templates.Dashboard.GrafanaPanel;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import org.grafana.api.octocharts.OctoHeatmapChart;
 import org.grafana.api.templates.Dashboard.abstractbasepanel.BaseTargetsTpl;
 
 import java.util.ArrayList;
@@ -12,7 +11,8 @@ import java.util.logging.Logger;
 
 public class LineGraphPanelTpl extends GrafanaBasePanelTpl {
 
-    static Logger log = Logger.getLogger(LineGraphPanelTpl.class.getName());
+    //static Logger log = Logger.getLogger(LineGraphPanelTpl.class.getName());
+    static Logger log = Logger.getLogger("myLogger");
 
     public String getAliasColors() {
         return aliasColors;

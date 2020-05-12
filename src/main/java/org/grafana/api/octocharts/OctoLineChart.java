@@ -11,7 +11,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class OctoLineChart extends OctoBaseChart {
-    static Logger log = Logger.getLogger(OctoLineChart.class.getName());
+    //static Logger log = Logger.getLogger(OctoLineChart.class.getName());
+    static Logger log = Logger.getLogger("myLogger");
     private String dashboarduid;
     private String dashboardtitle;
     private String tableName;
