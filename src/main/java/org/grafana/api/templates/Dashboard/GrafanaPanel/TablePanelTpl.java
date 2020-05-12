@@ -13,7 +13,8 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public class TablePanelTpl extends GrafanaBasePanelTpl {
-    static Logger log = Logger.getLogger(TablePanelTpl.class.getName());
+    //static Logger log = Logger.getLogger(TablePanelTpl.class.getName());
+    static Logger log = Logger.getLogger("myLogger");
 
     @SerializedName("options")
     @Expose

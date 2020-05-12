@@ -17,7 +17,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class OctoHeatmapChart extends OctoBaseChart{ 
-    static Logger log = Logger.getLogger(OctoHeatmapChart.class.getName());
+    //static Logger log = Logger.getLogger(OctoHeatmapChart.class.getName());
+    static Logger log = Logger.getLogger("myLogger");
     private String uid;
     private String dashboardtitle;
     private String tableName;
