@@ -119,14 +119,17 @@ public class ServerRequest {
                     }
                 }
                 try{
-                    log.info(String.valueOf(conn.getResponseCode()));
-                    InputStream stream = conn.getInputStream();
-                    try (JsonReader jReader = new JsonReader(new InputStreamReader(stream))) {
-                        Gson gson = new GsonBuilder().create();
-                        jsonResult = gson.fromJson(jReader, JsonElement.class);
-                        jReader.close();
+                    int responseCode = conn.getResponseCode();
+                    log.info(String.valueOf(responseCode));
+                    if (responseCode == 200) {
+                        InputStream stream = conn.getInputStream();
+                        try (JsonReader jReader = new JsonReader(new InputStreamReader(stream))) {
+                            Gson gson = new GsonBuilder().create();
+                            jsonResult = gson.fromJson(jReader, JsonElement.class);
+                            jReader.close();
+                        }
+                        stream.close();
                     }
-                    stream.close();
                     conn.disconnect();
                     return jsonResult;
                 }catch(IOException ex){
