@@ -10,18 +10,20 @@ public class OctoPieChart extends OctoBaseChart {
     private String dashboardtitle;
     private String tableName;
     private String columns;
+    private String workunitClass;
     private String workunitName;
     public PieChartPanelTpl piepanel;
 
-    public OctoPieChart(SparkSession spark, String dashboarduid, Dataset<Row> df, String workunitname, String summaryname, String paneltitle){
+    public OctoPieChart(SparkSession spark, String dashboarduid, Dataset<Row> df, String workunitClass, String workunitname, String summaryname, String paneltitle){
         this.dashboarduid = dashboarduid;
         this.piepanel = new PieChartPanelTpl();
         this.piepanel.setDatasource(System.getenv("GRAFANA_POSTGRES_DATASOURCE"));
         this.piepanel.setTitle(paneltitle);
         this.piepanel.setPieType("pie");
+        this.workunitClass=workunitClass;
         this.workunitName=workunitname;
-        this.tableName=workunitname.substring(workunitname.lastIndexOf('.') + 1) +"_"+ summaryname;
-        this.updateChartData(spark,df,dashboarduid,workunitname,summaryname);
+        this.tableName=(workunitClass.substring(workunitClass.lastIndexOf('.') + 1) +"_"+ summaryname).toLowerCase();
+        this.updateChartData(spark,df,dashboarduid,workunitClass,workunitname,summaryname);
     }
 
     public void setColumns(String columns) {
@@ -32,9 +34,9 @@ public class OctoPieChart extends OctoBaseChart {
     }
 
     public void publish(){
-        String query = String.format("SELECT\n now() as time, %s FROM %s where dashboardid = \'%s\'",this.columns,this.tableName,this.dashboarduid);
+        String query = String.format("SELECT\n now() as time, %s FROM %s where dashboardid = \'%s\' and workunitname = \'%s\'",this.columns,this.tableName,this.dashboarduid, this.workunitName);
         this.piepanel.setTargets(query,"time_series");
-        super.publish(this.dashboarduid,this.dashboardtitle,this.piepanel,this.workunitName);
+        super.publish(this.dashboarduid,this.dashboardtitle,this.piepanel,this.workunitClass);
     }
     public void setDashboardtitle(String dashboardtitle){
         this.dashboardtitle = dashboardtitle;
