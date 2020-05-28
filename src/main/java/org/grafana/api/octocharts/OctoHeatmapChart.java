@@ -22,19 +22,21 @@ public class OctoHeatmapChart extends OctoBaseChart{
     private String uid;
     private String dashboardtitle;
     private String tableName;
+    private String workunitClass;
     private String workunitName;
     public PlotlyHeatmapPanelChart heatmapPanel;
   
-    public OctoHeatmapChart(SparkSession spark, String dashboarduid, Dataset<Row> df, String workunitname, String summaryname, String xtitle, String ytitle, String paneltitle){
+    public OctoHeatmapChart(SparkSession spark, String dashboarduid, Dataset<Row> df, String workunitClass, String workunitName, String summaryname, String xtitle, String ytitle, String paneltitle){
         this.uid = dashboarduid;
         this.dashboardtitle = null;
         this.heatmapPanel = new PlotlyHeatmapPanelChart();
         this.heatmapPanel.setDatasource(System.getenv("GRAFANA_POSTGRES_DATASOURCE"));
         this.heatmapPanel.setPconfig(xtitle,ytitle);
         this.heatmapPanel.setTitle(paneltitle);
-        this.workunitName = workunitname;
-        this.tableName=workunitname.substring(workunitname.lastIndexOf('.') + 1) +"_"+ summaryname;
-        this.updateChartData(spark,df,dashboarduid,workunitname,summaryname);
+        this.workunitClass = workunitClass;
+        this.workunitName = workunitName;
+        this.tableName=(workunitClass.substring(workunitClass.lastIndexOf('.') + 1) +"_"+ summaryname).toLowerCase();
+        this.updateChartData(spark,df,dashboarduid,workunitClass,workunitName,summaryname);
     }
     public void setTrace(String xmapping,String ymapping,String zmapping){
         String s = String.format("SetTrace X Mappings %s Y Mappings %s Z Mappings %s",xmapping,ymapping,zmapping);
@@ -43,7 +45,7 @@ public class OctoHeatmapChart extends OctoBaseChart{
     }
     public void setTarget(String column){
         try{
-            this.heatmapPanel.setTargets(String.format("select %s from %s where dashboardid = \'%s\'",column,this.tableName,this.uid));
+            this.heatmapPanel.setTargets(String.format("select %s from %s where dashboardid = \'%s\' and workunitname = \'%s\'",column,this.tableName,this.uid, this.workunitName));
         }catch (Exception e){
             log.log(Level.SEVERE,"HeatMap Set Target Exception "+e.toString());
         }
@@ -54,7 +56,7 @@ public class OctoHeatmapChart extends OctoBaseChart{
 
     public void publish(){
         try {
-            super.publish(this.uid,this.dashboardtitle,this.heatmapPanel,this.workunitName);
+            super.publish(this.uid,this.dashboardtitle,this.heatmapPanel,this.workunitClass);
         }catch (Exception e){
             log.log(Level.SEVERE,"HeatMap Publish Exception "+e.toString());
         }
