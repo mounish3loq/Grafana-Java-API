@@ -18,10 +18,11 @@ public class OctoLineChart extends OctoBaseChart {
     private String tableName;
     private String columns;
     private String timecolumn;
+    private String workunitClass;
     private String workunitName;
     public LineGraphPanelTpl lineGraph;
 
-    public OctoLineChart(SparkSession spark, String dashboarduid, Dataset<Row> df, String workunitname, String summaryname, String paneltitle){
+    public OctoLineChart(SparkSession spark, String dashboarduid, Dataset<Row> df, String workunitClass, String workunitname, String summaryname, String paneltitle){
         log.info("OctoLineChart Spark Session : "+spark + " Dashboard UID: "+dashboarduid+ " Table Name : "+workunitname+"_"+summaryname+"Panel Title : "+paneltitle);
         this.dashboarduid = dashboarduid;
         this.dashboardtitle = null;
@@ -32,9 +33,10 @@ public class OctoLineChart extends OctoBaseChart {
         LineGraphLegendTpl lgl = new LineGraphLegendTpl();
         lgl.setShow(true);
         this.lineGraph.setLegend(lgl);
+        this.workunitClass = workunitClass;
         this.workunitName = workunitname;
-        this.tableName=workunitname.substring(workunitname.lastIndexOf('.') + 1) +"_"+ summaryname;
-        this.updateChartData(spark,df,dashboarduid,workunitname,summaryname);
+        this.tableName=(workunitClass.substring(workunitClass.lastIndexOf('.') + 1) +"_"+ summaryname).toLowerCase();
+        this.updateChartData(spark,df,dashboarduid,workunitClass,workunitname,summaryname);
     }
     public void setColumns(String cols){
         this.columns = cols;
@@ -43,10 +45,10 @@ public class OctoLineChart extends OctoBaseChart {
         this.timecolumn = col;
     }
     public void publish(){
-        String query = String.format("SELECT\n  %s AS \"time\", %s FROM %s \nWHERE\n dashboardid = \'%s\' and $__timeFilter(%s)\nORDER BY 1",this.timecolumn,this.columns,this.tableName,this.dashboarduid,this.timecolumn);
+        String query = String.format("SELECT\n  %s AS \"time\", %s FROM %s \nWHERE\n dashboardid = \'%s\' and workunitname = \'%s\' and $__timeFilter(%s)\nORDER BY 1",this.timecolumn,this.columns,this.tableName,this.dashboarduid,this.workunitName,this.timecolumn);
         this.lineGraph.setTargets(query,this.tableName,"time_series");
         try {
-            super.publish(this.dashboarduid, this.dashboardtitle, this.lineGraph,this.workunitName);
+            super.publish(this.dashboarduid, this.dashboardtitle, this.lineGraph,this.workunitClass);
         }catch (Exception e){
             log.log(Level.SEVERE,"OctoLine Chart Publish Exception "+e.toString());
         }
