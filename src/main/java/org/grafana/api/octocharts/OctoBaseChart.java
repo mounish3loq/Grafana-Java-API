@@ -19,8 +19,8 @@ import java.time.LocalDateTime;
 
 public abstract class OctoBaseChart {
     static Logger log = Logger.getLogger("myLogger");
-    public void updateChartData(SparkSession spark,Dataset<Row> df,String dashboarduid,String workunitname,String summaryname){
-        String tableName = workunitname.substring(workunitname.lastIndexOf('.') + 1) +"_"+ summaryname;
+    public void updateChartData(SparkSession spark,Dataset<Row> df,String dashboarduid,String workunitClass, String workunitname,String summaryname){
+        String tableName = workunitClass.substring(workunitClass.lastIndexOf('.') + 1) +"_"+ summaryname;
         log.info("UpdateChartData "+" Spark Session Id: " + spark +" Table Name: " + tableName);
         Properties connectionProperties = new Properties();
         connectionProperties.put("user", System.getenv("GRAFANA_POSTGRES_USERNAME"));
@@ -28,6 +28,7 @@ public abstract class OctoBaseChart {
         connectionProperties.put("driver", "org.postgresql.Driver");
 
         df = df.withColumn("dashboardid",functions.lit(dashboarduid));
+        df = df.withColumn("workunitclass", functions.lit(workunitClass));
         df = df.withColumn("workunitname", functions.lit(workunitname));
         df = df.withColumn("summaryname",functions.lit(summaryname));
         df.write()
