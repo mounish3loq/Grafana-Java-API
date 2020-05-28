@@ -10,10 +10,11 @@ public class OctoStatChart extends OctoBaseChart {
     private String dashboardtitle;
     private String tableName;
     private String columns;
+    private String workunitClass;
     private String workunitName;
     public StatChartTpl statpanel;
 
-    public OctoStatChart(SparkSession spark, String dashboarduid, Dataset<Row> df, String workunitname, String summaryname, String paneltitle){
+    public OctoStatChart(SparkSession spark, String dashboarduid, Dataset<Row> df, String workunitClass, String workunitname, String summaryname, String paneltitle){
         this.dashboarduid = dashboarduid;
         this.dashboardtitle = null;
 
@@ -21,9 +22,10 @@ public class OctoStatChart extends OctoBaseChart {
         this.statpanel.setDatasource(System.getenv("POSTGRES_DATASOURCE"));
         this.statpanel.setTitle(paneltitle);
         this.statpanel.setType("stat");
+        this.workunitClass = workunitClass;
         this.workunitName = workunitname;
-        this.tableName = workunitname.substring(workunitname.lastIndexOf('.') + 1) + "_"+summaryname;
-        this.updateChartData(spark,df,dashboarduid,workunitname,summaryname);
+        this.tableName = (workunitClass.substring(workunitClass.lastIndexOf('.') + 1) + "_"+summaryname).toLowerCase();
+        this.updateChartData(spark,df,dashboarduid,workunitClass,workunitname,summaryname);
 
     }
 
@@ -31,9 +33,9 @@ public class OctoStatChart extends OctoBaseChart {
         this.columns = cols;
     }
     public void publish(){
-        String query = String.format("SELECT\n %s FROM %s where dashboardid = \'%s\'",this.columns,this.tableName,this.dashboarduid);
+        String query = String.format("SELECT\n %s FROM %s where dashboardid = \'%s\' and workunitname = \'%s\'",this.columns,this.tableName,this.dashboarduid, this.workunitName);
         this.statpanel.setTargets(query);
-        super.publish(this.dashboarduid,this.dashboardtitle,this.statpanel,this.workunitName);
+        super.publish(this.dashboarduid,this.dashboardtitle,this.statpanel,this.workunitClass);
     }
     public void setDashboardtitle(String dashboardtitle){
         this.dashboardtitle = dashboardtitle;
