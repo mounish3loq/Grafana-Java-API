@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 public abstract class OctoBaseChart {
     static Logger log = Logger.getLogger("myLogger");
     public void updateChartData(SparkSession spark,Dataset<Row> df,String dashboarduid,String workunitClass, String workunitname,String summaryname){
-        String tableName = workunitClass.substring(workunitClass.lastIndexOf('.') + 1) +"_"+ summaryname;
+        String tableName =(workunitClass.substring(workunitClass.lastIndexOf('.') + 1) +"_"+ summaryname).toLowerCase();
         log.info("UpdateChartData "+" Spark Session Id: " + spark +" Table Name: " + tableName);
         Properties connectionProperties = new Properties();
         connectionProperties.put("user", System.getenv("GRAFANA_POSTGRES_USERNAME"));
@@ -32,7 +32,7 @@ public abstract class OctoBaseChart {
         df = df.withColumn("workunitname", functions.lit(workunitname));
         df = df.withColumn("summaryname",functions.lit(summaryname));
         df.write()
-                .mode("append")
+                .mode("append") //table level { ignore,append,overwrite }
                 .jdbc("jdbc:postgresql://"+System.getenv("GRAFANA_POSTGRES_URL")+"/"+System.getenv("GRAFANA_POSTGRES_DB"), tableName, connectionProperties);
     }
 
