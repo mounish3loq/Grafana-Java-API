@@ -33,7 +33,7 @@ public class OctoBarChart extends OctoBaseChart{
         this.workunitClass = workunitClass;
         this.workunitName = workunitName;
         this.tableName=(workunitClass.substring(workunitClass.lastIndexOf('.') + 1) +"_"+ summaryname).toLowerCase();
-        this.updateChartData(spark,df,dashboarduid,workunitClass,workunitName,summaryname);
+        this.updateChartData(spark,df,dashboarduid,workunitClass,workunitName,summaryname,tableName);
 
 
     }

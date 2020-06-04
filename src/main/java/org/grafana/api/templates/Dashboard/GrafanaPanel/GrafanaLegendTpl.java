@@ -2,7 +2,6 @@ package org.grafana.api.templates.Dashboard.GrafanaPanel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import org.grafana.api.octocharts.OctoHeatmapChart;
 
 import java.util.logging.Logger;
 

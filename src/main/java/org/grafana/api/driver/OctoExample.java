@@ -1,14 +1,9 @@
 package org.grafana.api.driver;
 
-import ca.krasnay.sqlbuilder.SelectBuilder;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
-import org.grafana.api.RequestBuilder;
 import org.grafana.api.octocharts.OctoBarChart;
-import org.grafana.api.octocharts.OctoHeatmapChart;
-import org.grafana.api.octocharts.OctoLineChart;
-import org.grafana.api.octocharts.OctoTableChart;
 
 import java.util.Properties;
 
