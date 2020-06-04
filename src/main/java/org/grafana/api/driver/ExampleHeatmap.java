@@ -17,7 +17,7 @@ public class ExampleHeatmap {
                 .appName("Java Spark SQL basic example 2")
                 .config("spark.some.config.option", "some-value2")
                 .getOrCreate();
-        /* data in sample1.csv  |  employees col as x-axis & jan,feb,mar as y-axis.
+        /* data in sample1.csv  |  jan,feb,mar as x-axis & employees col as y-axis
         employees,jan,feb,mar   |   emp3 |  300  |  500  |  320  |
         emp1,100,150,200        |   emp2 |  200  |  130  |  20   |
         emp2,200,130,20         |   emp1 |__100__|__150__|__200__|
