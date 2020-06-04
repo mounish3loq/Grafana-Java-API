@@ -21,7 +21,7 @@ public class ExampleHeatmap {
         employees,jan,feb,mar   |   emp3 |  300  |  500  |  320  |
         emp1,100,150,200        |   emp2 |  200  |  130  |  20   |
         emp2,200,130,20         |   emp1 |__100__|__150__|__200__|
-        emp3,300,500,320        |          emp1   emp2    emp3
+        emp3,300,500,320        |           jan     feb     mar
          */
         Dataset<Row> df1 = spark.read().format("csv").option("header","true").load("D:/Engineering/work_folders/heatmap_data/sample1.csv");
         /*
@@ -37,8 +37,8 @@ public class ExampleHeatmap {
          */
 
         OctoHeatmapChart octoHeatmapChart = new OctoHeatmapChart(spark,"ABCDE",df1,"abcd.sampleworkunit", "Heatworkunit","HeatSummary","xdata","ydata","Heatmap chart");
-        octoHeatmapChart.setXaxis("employees"); //Make sure the dataframe is ordered according to this column so that the x-axis data is displayed in an ordered way.
-        octoHeatmapChart.setYaxis("2012,2013,2014");
+        octoHeatmapChart.setXaxis("jan,feb,mar"); //Make sure the dataframe is ordered according to this column so that the x-axis data is displayed in an ordered way.
+        octoHeatmapChart.setYaxis("employees");
         octoHeatmapChart.publish();
 
         spark.stop();
