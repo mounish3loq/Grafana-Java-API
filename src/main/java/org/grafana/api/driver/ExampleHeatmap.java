@@ -21,7 +21,7 @@ public class ExampleHeatmap {
         Dataset<Row> df1 = spark.read().format("csv").option("header","true").load("D:/Engineering/work_folders/heatmap_data/sample1.csv");
         df1.show();
 
-        OctoHeatmapChart2 octoHeatmapChart = new OctoHeatmapChart2(spark,"ABCDE",df1,"abcd.sampleworkunit", "Heatworkunit","HeatSummary","xdata","ydata","Heatmap chart");
+        OctoHeatmapChart octoHeatmapChart = new OctoHeatmapChart(spark,"ABCDE",df1,"abcd.sampleworkunit", "Heatworkunit","HeatSummary","xdata","ydata","Heatmap chart");
         octoHeatmapChart.setXaxis("employees");
         octoHeatmapChart.setYaxis("jan,feb,mar");
         octoHeatmapChart.publish();
