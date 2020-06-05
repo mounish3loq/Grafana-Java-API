@@ -13,10 +13,10 @@ public class ExampleHeatmap {
                 .config("spark.some.config.option", "some-value2")
                 .getOrCreate();
         /* data in sample1.csv  |  jan,feb,mar as x-axis & employees col as y-axis
-        employees,jan,feb,mar   |   emp3 |  300  |  500  |  320  |
-        emp1,100,150,200        |   emp2 |  200  |  130  |  20   |
-        emp2,200,130,20         |   emp1 |__100__|__150__|__200__|
-        emp3,300,500,320        |           jan     feb     mar
+        employees,jan,feb,mar   |   emp3 |  7  |  8  |  9  |
+        emp1,       1, 2, 3     |   emp2 |  4  |  5  |  6  |
+        emp2,       4, 5, 6     |   emp1 |__1__|__2__|__3__|
+        emp3,       7, 8, 9     |           jan     feb     mar
          */
         Dataset<Row> df1 = spark.read().format("csv").option("header","true").load("D:/Engineering/work_folders/heatmap_data/sample1.csv");
 
@@ -28,6 +28,27 @@ public class ExampleHeatmap {
         octoHeatmapChart.setXaxis("employees");
         octoHeatmapChart.setYaxis("jan,feb,mar");
         Because the dataframe needs to be transposed to be displayed correctly.
+
+        Correct chart is this
+
+        |   mar |  3    |  6    |    9   |
+        |   feb |  2    |  5    |    8   |
+        |   jan |__1____|__4____|____7___|
+        |           emp1     emp2    emp3
+
+        But however the chart will be displayed incorrectly.
+
+        |   mar |  7    |  8    |  9   |
+        |   feb |  4    |  5    |  6   |
+        |   jan |__1  __|__2  __|__3 __|
+        |           emp1     emp2    emp3
+
+        Because this transpose needs to happen
+
+        emp1,emp2,emp3
+        1, 	  4,   7
+        2, 	  5,   8
+        3,    6,   9
          */
         octoHeatmapChart.publish();
 
