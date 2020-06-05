@@ -16,6 +16,7 @@ public class OctoHeatmapChart extends OctoBaseChart{
     static Logger log = Logger.getLogger("myLogger");
     private final SparkSession sparkWorker;
     private final String uid;
+    private final Dataset<Row> df_main;
     private String dashboardtitle;
     private final String tableNameLarge;
     private final String tableNameShort;
@@ -30,6 +31,7 @@ public class OctoHeatmapChart extends OctoBaseChart{
     public OctoHeatmapChart(SparkSession spark, String dashboarduid, Dataset<Row> df, String workunitClass, String workunitName, String summaryname, String xtitle, String ytitle, String paneltitle){
         this.sparkWorker = spark;
         this.uid = dashboarduid;
+        this.df_main = df;
         this.dashboardtitle = null;
         this.heatmapPanel = new PlotlyHeatmapPanelChart();
         this.heatmapPanel.setDatasource(System.getenv("GRAFANA_POSTGRES_DATASOURCE"));
@@ -52,6 +54,9 @@ public class OctoHeatmapChart extends OctoBaseChart{
             convertToDataFrameAndPersist(arr,this.xmapping);
         }
         else{
+            List<String> list_x_axis = this.df_main.select(columnNames).as(Encoders.STRING()).collectAsList();
+            this.zmapping = String.join(",",list_x_axis);
+            this.heatmapPanel.setTargets(String.format("select %s from %s where dashboardid = \'%s\' and workunitname = \'%s\'",this.zmapping,this.tableNameLarge,this.uid, this.workunitName));
             this.xmapping = columnNames;
         }
         this.heatmapPanel.setTargets(String.format("select %s from %s where dashboardid = \'%s\' and workunitname = \'%s\'",columnNames,this.tableNameLarge,this.uid, this.workunitName));
