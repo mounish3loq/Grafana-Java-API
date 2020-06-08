@@ -87,7 +87,6 @@ public class OctoHeatmapChart extends OctoBaseChart{
         listOfStructField.add(DataTypes.createStructField(colHeader, DataTypes.StringType, true));
         StructType structType=DataTypes.createStructType(listOfStructField);
         Dataset<Row> df_x = sparkWorker.createDataFrame(list,structType);
-        df_x.orderBy(colHeader);
         df_x.show();
         super.updateChartData(this.sparkWorker,df_x,this.uid,this.workunitClass,this.workunitName,this.summaryName,this.tableNameShort);
     }
