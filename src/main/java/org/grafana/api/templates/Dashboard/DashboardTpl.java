@@ -1,14 +1,9 @@
 
 package org.grafana.api.templates.Dashboard;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import org.grafana.api.templates.Dashboard.GrafanaPanel.GrafanaBasePanelTpl;
-import org.grafana.api.templates.Dashboard.PlotlyPanel.PlotlyPanelTpl;
 import org.grafana.api.templates.Dashboard.abstractbasepanel.BasePanelTpl;
+import org.grafana.api.templates.Dashboard.variables.TemplatingTpl;
 
 import java.util.ArrayList;
 import java.util.List;

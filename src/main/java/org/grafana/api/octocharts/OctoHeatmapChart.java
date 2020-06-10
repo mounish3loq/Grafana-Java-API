@@ -47,6 +47,12 @@ public class OctoHeatmapChart extends OctoBaseChart{
 
     public void setXaxis(String columnNames){
         List<String> arr = Arrays.asList(columnNames.split(","));
+        List<String> arr2 = new ArrayList<>();
+        for (String s : arr){
+            arr2.add("\"" + s +"\"");
+        }
+        String xaxis_cols = String.join(",",arr2);
+
         if (arr.size() > 1){
             this.zmapping = columnNames;
             this.xmapping = "xlabel";
@@ -59,7 +65,7 @@ public class OctoHeatmapChart extends OctoBaseChart{
             this.heatmapPanel.setTargets(String.format("select %s from %s where dashboardid = \'%s\' and workunitname = \'%s\'",this.zmapping,this.tableNameLarge,this.uid, this.workunitName));
             this.xmapping = columnNames;
         }
-        this.heatmapPanel.setTargets(String.format("select %s from %s where dashboardid = \'%s\' and workunitname = \'%s\'",columnNames,this.tableNameLarge,this.uid, this.workunitName));
+        this.heatmapPanel.setTargets(String.format("select %s from %s where dashboardid = \'%s\' and workunitname = \'%s\'", xaxis_cols,this.tableNameLarge,this.uid, this.workunitName));
         //if xcolumn names are >1 then x is also z.
         //store into table.
     }

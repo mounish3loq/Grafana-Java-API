@@ -27,7 +27,7 @@ public class OctoExample {
                 .jdbc("jdbc:postgresql://"+System.getenv("GRAFANA_POSTGRES_URL")+"/"+System.getenv("GRAFANA_POSTGRES_DB"), "sample_heatmap_table", connectionProperties);
 
 
-        OctoBarChart octoBarChart = new OctoBarChart(spark,"ABCDE",df,"worker", "abc.Sampleworkunit","SampleSummary","xdata","ydata","Bar chart");
+        OctoBarChart octoBarChart = new OctoBarChart(spark,"ABCDE",df,"asd.abcd.worker", "adsd.abc.Sampleworkunit","SampleSummary","xdata","ydata","Bar chart");
         octoBarChart.setTrace("a","b");
         octoBarChart.publish();
 
