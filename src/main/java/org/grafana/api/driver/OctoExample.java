@@ -1,14 +1,9 @@
 package org.grafana.api.driver;
 
-import ca.krasnay.sqlbuilder.SelectBuilder;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
-import org.grafana.api.RequestBuilder;
 import org.grafana.api.octocharts.OctoBarChart;
-import org.grafana.api.octocharts.OctoHeatmapChart;
-import org.grafana.api.octocharts.OctoLineChart;
-import org.grafana.api.octocharts.OctoTableChart;
 
 import java.util.Properties;
 
@@ -31,14 +26,16 @@ public class OctoExample {
         Dataset<Row> df3 =spark.read()
                 .jdbc("jdbc:postgresql://"+System.getenv("GRAFANA_POSTGRES_URL")+"/"+System.getenv("GRAFANA_POSTGRES_DB"), "sample_heatmap_table", connectionProperties);
 
+
+        OctoBarChart octoBarChart = new OctoBarChart(spark,"ABCDE",df,"asd.abcd.worker", "adsd.abc.Sampleworkunit","SampleSummary","xdata","ydata","Bar chart");
+        octoBarChart.setTrace("a","b");
+        octoBarChart.publish();
+
+        /*
         OctoLineChart octoLineChart = new OctoLineChart(spark,"ABCDE",df2,"","Lineworkunit","LineSummary","Line chart");
         octoLineChart.setTimeColumn("year_month");
         octoLineChart.setColumns("varejo AS \"Varejo\",vestuario AS \"Vestuario\",\"serviÇo\" AS \"Serviço\",supermercados AS \"Supermercados\",restaurante AS \"Restaurante\", \"posto_de_gas\" AS \"Posto De Gas\"");
         octoLineChart.publish();
-
-        OctoBarChart octoBarChart = new OctoBarChart(spark,"ABCDE",df,"", "Sampleworkunit","SampleSummary","xdata","ydata","Bar chart");
-        octoBarChart.setTrace("a","b");
-        octoBarChart.publish();
 
         OctoHeatmapChart octoHeatmapChart = new OctoHeatmapChart(spark,"ABCDE",df3,"", "Heatworkunit","HeatSummary","xdata","ydata","Heatmap chart");
         octoHeatmapChart.setTrace("category","category","i0");
@@ -49,6 +46,7 @@ public class OctoExample {
         OctoTableChart octoTableChart = new OctoTableChart(spark,"ABCDE",df3, "", "Tableworkunit","TableSummary","Table chart");
         octoTableChart.setColumns("category,i0");
         octoTableChart.publish();
+         */
 
         spark.stop();
 

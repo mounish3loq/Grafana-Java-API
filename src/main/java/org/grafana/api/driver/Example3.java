@@ -16,7 +16,7 @@ public class Example3 {
     public static void main(String[] args){
         Gson gson = new GsonBuilder().create();
         //Gson gsonPretty = new GsonBuilder().setPrettyPrinting().create();
-        String grafanaserver = "http://localhost:3000";
+        String grafanaserver = "localhost:3000";
         String mainOrgApiKey = "Bearer eyJrIjoiSmtSNUY2R3RyV0hVQ0oxQ0E5NlJlZ0lXYVp4Z0s0T1QiLCJuIjoiVGVzdCBLZXkiLCJpZCI6MX0= ";
 
         //Initializing a panel

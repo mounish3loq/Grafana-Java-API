@@ -1,98 +1,58 @@
 package org.grafana.api.driver;
-
-import ca.krasnay.sqlbuilder.SelectBuilder;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import org.grafana.api.GrafanaAPI;
-import org.grafana.api.responses.Dashboard.NewCreateUpdateDashboardRsp;
-import org.grafana.api.templates.Charts.PlotlyHeatmapPanelChart;
-import org.grafana.api.templates.Dashboard.CreateUpdateDashboardTpl;
-import org.grafana.api.templates.Dashboard.DashboardTpl;
-
-import java.io.FileWriter;
-import java.io.IOException;
+import org.apache.spark.sql.Dataset;
+import org.apache.spark.sql.Row;
+import org.apache.spark.sql.SparkSession;
+import org.grafana.api.octocharts.*;
 
 public class ExampleHeatmap {
     public static void main(String[] args){
-        Gson gson = new GsonBuilder().create();
-        //Gson gsonPretty = new GsonBuilder().setPrettyPrinting().create();
-        String grafanaserver = "http://localhost:3000";
-        String mainOrgApiKey = "Bearer eyJrIjoiSmtSNUY2R3RyV0hVQ0oxQ0E5NlJlZ0lXYVp4Z0s0T1QiLCJuIjoiVGVzdCBLZXkiLCJpZCI6MX0= ";
+        SparkSession spark = SparkSession
+                .builder()
+                .master("local")
+                .appName("Java Spark SQL basic example 2")
+                .config("spark.some.config.option", "some-value2")
+                .getOrCreate();
+        /* data in sample1.csv  |  jan,feb,mar as x-axis & employees col as y-axis
+        employees,jan,feb,mar   |   emp3 |  7  |  8  |  9  |
+        emp1,       1, 2, 3     |   emp2 |  4  |  5  |  6  |
+        emp2,       4, 5, 6     |   emp1 |__1__|__2__|__3__|
+        emp3,       7, 8, 9     |           jan     feb     mar
+         */
+        Dataset<Row> df1 = spark.read().format("csv").option("header","true").load("D:/Engineering/work_folders/heatmap_data/sample1.csv");
+        df1.orderBy("employees");
+        OctoHeatmapChart octoHeatmapChart = new OctoHeatmapChart(spark,"ABCDEE",df1,"abcd.sampleworkunit_2", "Heatworkunit","HeatSummary","xdata","ydata","Heatmap chart");
+        octoHeatmapChart.setXaxis("jan,feb,mar"); //Always a string containing either (one column header) or  (List of column headers)
+        octoHeatmapChart.setYaxis("employees"); // Always a String containing Column header of an ordered column
 
-        //Initializing a panel
-        PlotlyHeatmapPanelChart heatmapPanel = new PlotlyHeatmapPanelChart();
-        heatmapPanel.setDatasource("MySQL-pre");
+        /* Don't set like this .It will produce chart with wrong data.
+        octoHeatmapChart.setXaxis("employees");
+        octoHeatmapChart.setYaxis("jan,feb,mar");
+        Because the dataframe needs to be transposed to be displayed correctly.
 
-        //Setting configuration: xaxis-title,yaxis-title,type of chart
-        heatmapPanel.setPconfig("XData","YData");
-        heatmapPanel.setTraces("category","category","Agencia_de_tur");
+        Correct chart is this
 
-        //Setting query
-        String query = new SelectBuilder().column("category").from("insight8").toString();
-        heatmapPanel.setTargets(query);
-        String query2 = new SelectBuilder()
-                            .column("Agencia_de_tur")
-                            .column("Alug_de_carros")
-                            .column("ARTIGOS_ELETRO")
-                            .column("AUTO_PECAS")
-                            .column("CIA_AEREAS")
-                            .column("FARMACIAS")
-                            .column("HOSP_E_CLINICA")
-                            .column("HOTEIS")
-                            .column("INEXISTENTE")
-                            .column("JOALHERIA")
-                            .column("LOJA_DE_DEPART")
-                            .column("MOTO")
-                            .column("MAT_CONSTRUCAO")
-                            .column("MOVEIS_E_DECOR")
-                            .column("POSTO_DE_GAS")
-                            .column("RESTAURANTE")
-                            .column("SEM_RAMO")
-                            .column("SERVICO")
-                            .column("SUPERMERCADOS")
-                            .column("TRANS_FINANC")
-                            .column("VAREJO")
-                            .column("VESTUARIO")
-                            .from("insight8")
-                            .toString();
-        heatmapPanel.setTargets(query2);
+        |   mar |  3    |  6    |    9   |
+        |   feb |  2    |  5    |    8   |
+        |   jan |__1____|__4____|____7___|
+        |           emp1     emp2    emp3
 
-        //Setting title of panel
-        heatmapPanel.setTitle("Bar chart");
+        But however the chart will be displayed incorrectly.
 
-        //Initialising grafana server
-        GrafanaAPI grafanaAPI = new GrafanaAPI(grafanaserver);
+        |   mar |  7    |  8    |  9   |
+        |   feb |  4    |  5    |  6   |
+        |   jan |__1  __|__2  __|__3 __|
+        |           emp1     emp2    emp3
 
-        //Creating a template for dashboard higher level
-        CreateUpdateDashboardTpl dashTest = new CreateUpdateDashboardTpl();
+        Because this transpose needs to happen
 
-        //Creating a template for dashboard lower level
-        DashboardTpl dashItems = new DashboardTpl();
+        emp1,emp2,emp3
+        1, 	  4,   7
+        2, 	  5,   8
+        3,    6,   9
+         */
+        octoHeatmapChart.publish();
 
-        //Adding list/single of panels to dashboard
-        dashItems.setPanels(heatmapPanel);
+        spark.stop();
 
-        //Setting title for dashboard
-        dashItems.setTitle("MyTestTitle2");
-
-        //Passing lower level dashboard to higher level dashboard
-        dashTest.setDashboard(dashItems);
-        //dashTest.setOverwrite(false);
-
-        //Store generated dashboard json data
-        try{
-            FileWriter fw = new FileWriter("dashtest.json");
-            fw.write(gson.toJson(dashTest));
-            fw.close();
-        }catch (IOException ie){
-            System.out.println("File error");
-        }
-
-        //Calling dashboard creation API endpoint.
-        NewCreateUpdateDashboardRsp createUpdateDashboard = grafanaAPI.orgAdminAPI(mainOrgApiKey).createUpdateDashboard(dashTest);
-        System.out.println("Response msg : " + createUpdateDashboard.getStatus());
-        System.out.println("url is : " + createUpdateDashboard.getUrl());
-        System.out.println("Uid across grafana servers" + createUpdateDashboard.getUid());
-        System.out.println("id unique within a server" + createUpdateDashboard.getId());
     }
 }

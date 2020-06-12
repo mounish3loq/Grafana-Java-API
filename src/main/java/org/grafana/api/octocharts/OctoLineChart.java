@@ -36,7 +36,7 @@ public class OctoLineChart extends OctoBaseChart {
         this.workunitClass = workunitClass;
         this.workunitName = workunitname;
         this.tableName=(workunitClass.substring(workunitClass.lastIndexOf('.') + 1) +"_"+ summaryname).toLowerCase();
-        this.updateChartData(spark,df,dashboarduid,workunitClass,workunitname,summaryname);
+        this.updateChartData(spark,df,dashboarduid,workunitClass,workunitname,summaryname,tableName);
     }
     public void setColumns(String cols){
         this.columns = cols;

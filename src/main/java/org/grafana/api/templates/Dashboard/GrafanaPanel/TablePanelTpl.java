@@ -1,9 +1,7 @@
 package org.grafana.api.templates.Dashboard.GrafanaPanel;
 
-import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import org.grafana.api.octocharts.OctoHeatmapChart;
 import org.grafana.api.templates.Dashboard.GrafanaPanel.tablestyles.TableStylesTpl1;
 import org.grafana.api.templates.Dashboard.GrafanaPanel.tablestyles.TableStylesTpl2;
 import org.grafana.api.templates.Dashboard.abstractbasepanel.BaseTargetsTpl;

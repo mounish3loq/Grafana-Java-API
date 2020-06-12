@@ -1,9 +1,5 @@
 package org.grafana.api.octocharts;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
@@ -22,7 +18,7 @@ public class OctoBarChart extends OctoBaseChart{
 
     public OctoBarChart(SparkSession spark,String dashboarduid, Dataset<Row> df, String workunitName, String workunitClass, String summaryname, String xtitle, String ytitle, String paneltitle){
 
-        log.info("Octo Bar Chart Spark Session Id: " + spark +" Table Name: " + workunitClass+ "_"+summaryname +" Panel Title : " +paneltitle);
+        log.info("Octo Bar Chart Spark Session Id: " + spark +" Panel Title : " +paneltitle);
 
         this.uid = dashboarduid;
         this.dashboardTitle = null;
@@ -33,7 +29,7 @@ public class OctoBarChart extends OctoBaseChart{
         this.workunitClass = workunitClass;
         this.workunitName = workunitName;
         this.tableName=(workunitClass.substring(workunitClass.lastIndexOf('.') + 1) +"_"+ summaryname).toLowerCase();
-        this.updateChartData(spark,df,dashboarduid,workunitClass,workunitName,summaryname);
+        this.updateChartData(spark,df,dashboarduid,workunitClass,workunitName,summaryname,this.tableName);
 
 
     }
