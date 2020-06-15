@@ -40,8 +40,8 @@ public class OctoHeatmapChart extends OctoBaseChart{
         this.workunitClass = workunitClass;
         this.workunitName = workunitName;
         this.summaryName = summaryname;
-        this.tableNameLarge=(workunitClass.substring(workunitClass.lastIndexOf('.') + 1) +"_"+ summaryname + "_1").toLowerCase();
-        this.tableNameShort=(workunitClass.substring(workunitClass.lastIndexOf('.') + 1) +"_"+ summaryname + "_2").toLowerCase();
+        this.tableNameLarge=(workunitClass.substring(workunitClass.lastIndexOf('.') + 1) +"_"+ summaryname.substring(summaryname.lastIndexOf('.') + 1) + "_1").toLowerCase();
+        this.tableNameShort=(workunitClass.substring(workunitClass.lastIndexOf('.') + 1) +"_"+ summaryname.substring(summaryname.lastIndexOf('.') + 1) + "_2").toLowerCase();
         super.updateChartData(this.sparkWorker,df,this.uid,this.workunitClass,this.workunitName,this.summaryName,this.tableNameLarge);
     }
 
