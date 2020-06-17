@@ -18,9 +18,8 @@ public class ExampleHeatmap {
         emp2,       4, 5, 6     |   emp1 |__1__|__2__|__3__|
         emp3,       7, 8, 9     |           jan     feb     mar
          */
-        Dataset<Row> df1 = spark.read().format("csv").option("header","true").load("D:/Engineering/work_folders/heatmap_data/sample1.csv");
-        df1.orderBy("employees");
-        OctoHeatmapChart octoHeatmapChart = new OctoHeatmapChart(spark,"ABCDEE",df1,"abcd.sampleworkunit_2", "Heatworkunit","HeatSummary","xdata","ydata","Heatmap chart");
+        Dataset<Row> df1 = spark.read().format("csv").option("header","true").load("D:/temp/heatmap_data/sample1.csv");
+        OctoHeatmapChart octoHeatmapChart = new OctoHeatmapChart(spark,"ABCDG",df1,"abcd.sampleworkunit_2", "Heatworkunit","HeatSummary","xdata","ydata","Heatmap chart");
         octoHeatmapChart.setXaxis("jan,feb,mar"); //Always a string containing either (one column header) or  (List of column headers)
         octoHeatmapChart.setYaxis("employees"); // Always a String containing Column header of an ordered column
 

@@ -8,6 +8,7 @@ import org.grafana.api.templates.Charts.PlotlyHeatmapPanelChart;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -54,33 +55,30 @@ public class OctoHeatmapChart extends OctoBaseChart{
         String xaxis_cols = String.join(",",arr2);
 
         if (arr.size() > 1){
-            this.zmapping = columnNames;
+            this.zmapping = xaxis_cols;
             this.xmapping = "xlabel";
-            this.heatmapPanel.setTargets(String.format("select %s from %s where dashboardid = \'%s\' and workunitname = \'%s\'",this.xmapping,this.tableNameShort,this.uid, this.workunitName));
+            this.heatmapPanel.setTargets(String.format("select %s from %s where dashboardid = \'%s\' and workunitname = \'%s\' order by %s",this.xmapping,this.tableNameShort,this.uid, this.workunitName,this.xmapping));
             convertToDataFrameAndPersist(arr,this.xmapping);
         }
         else{
             List<String> list_x_axis = this.df_main.select(columnNames).as(Encoders.STRING()).collectAsList();
-            this.zmapping = String.join(",",list_x_axis);
-            this.heatmapPanel.setTargets(String.format("select %s from %s where dashboardid = \'%s\' and workunitname = \'%s\'",this.zmapping,this.tableNameLarge,this.uid, this.workunitName));
+            List<String> list_x_axis2 = new ArrayList<>();
+            for (String str : list_x_axis){
+                list_x_axis2.add("\"" + str +"\"");
+            }
+            list_x_axis2.sort(Comparator.comparing(String::toString));
+            this.zmapping = String.join(",",list_x_axis2);
+            //this.heatmapPanel.setTargets(String.format("select %s from %s where dashboardid = \'%s\' and workunitname = \'%s\'",this.zmapping,this.tableNameLarge,this.uid, this.workunitName));
             this.xmapping = columnNames;
         }
-        this.heatmapPanel.setTargets(String.format("select %s from %s where dashboardid = \'%s\' and workunitname = \'%s\'", xaxis_cols,this.tableNameLarge,this.uid, this.workunitName));
+        //this.heatmapPanel.setTargets(String.format("select %s from %s where dashboardid = \'%s\' and workunitname = \'%s\'", xaxis_cols,this.tableNameLarge,this.uid, this.workunitName));
         //if xcolumn names are >1 then x is also z.
         //store into table.
     }
     public void setYaxis(String columnNames){
-        List<String> arr = Arrays.asList(columnNames.split(","));
-        if (arr.size() > 1){
-            this.zmapping = columnNames;
-            this.ymapping = "ylabel";
-            this.heatmapPanel.setTargets(String.format("select %s from %s where dashboardid = \'%s\' and workunitname = \'%s\'",this.ymapping,this.tableNameShort,this.uid, this.workunitName));
-            convertToDataFrameAndPersist(arr,this.ymapping);
-        }
-        else{
-            this.ymapping = columnNames;
-        }
-        this.heatmapPanel.setTargets(String.format("select %s from %s where dashboardid = \'%s\' and workunitname = \'%s\'",columnNames,this.tableNameLarge,this.uid, this.workunitName));
+        this.ymapping = columnNames;
+        this.heatmapPanel.setTargets(String.format("select \"%s\" from %s where dashboardid = \'%s\' and workunitname = \'%s\' order by \"%s\"",this.ymapping,this.tableNameLarge,this.uid, this.workunitName,this.ymapping));
+        this.heatmapPanel.setTargets(String.format("select %s from %s where dashboardid = \'%s\' and workunitname = \'%s\' order by \"%s\"", this.zmapping,this.tableNameLarge,this.uid, this.workunitName,this.ymapping));
         //if ycolumn names are > 1 then y axis is also z
         //store into table.
     }
@@ -104,7 +102,7 @@ public class OctoHeatmapChart extends OctoBaseChart{
         try {
             String s = String.format("SetTrace X Mappings %s Y Mappings %s Z Mappings %s",this.xmapping,this.ymapping,this.zmapping);
             log.info(s);
-            this.heatmapPanel.setTraces(this.xmapping,this.ymapping,this.zmapping.split(",")[0]);
+            this.heatmapPanel.setTraces(this.xmapping,this.ymapping,this.zmapping.split(",")[0].split("\"")[1]);
             super.publish(this.uid,this.dashboardtitle,this.heatmapPanel,this.workunitClass);
         }catch (Exception e){
             log.log(Level.SEVERE,"HeatMap Publish Exception "+e.toString());
